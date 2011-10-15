@@ -1,4 +1,4 @@
-package org.asmatron.messengine.engines.support;
+package org.asmatron.messengine.messaging;
 
 import org.asmatron.messengine.messaging.Message;
 

@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 import org.asmatron.messengine.action.Action;
 import org.asmatron.messengine.action.ActionHandler;
 import org.asmatron.messengine.action.ActionObject;
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.action.ResponseCallback;
 import org.asmatron.messengine.engines.components.ActionProcessor;
@@ -19,7 +19,7 @@ import org.asmatron.messengine.engines.components.DefaultActionRunnerFactory;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DefaultActionDelegate implements ActionDelegate {
-	private Map<ActionType<?>, ActionProcessor<?>> actionCollections = new HashMap<ActionType<?>, ActionProcessor<?>>();
+	private Map<ActionId<?>, ActionProcessor<?>> actionCollections = new HashMap<ActionId<?>, ActionProcessor<?>>();
 	private ExecutorService actionExecutor;
 	private ActionRunnerFactory runnerFactory;
 
@@ -32,7 +32,7 @@ public class DefaultActionDelegate implements ActionDelegate {
 		this.runnerFactory = runnerFactory;
 	}
 
-	public <T extends ActionObject> void addActionHandler(ActionType<T> command, ActionHandler<T> commandHandler) {
+	public <T extends ActionObject> void addActionHandler(ActionId<T> command, ActionHandler<T> commandHandler) {
 		ActionProcessor<T> commandProcessor = get(command, true);
 		commandProcessor.handle(commandHandler);
 	}
@@ -42,7 +42,7 @@ public class DefaultActionDelegate implements ActionDelegate {
 		actionExecutor.submit(runnerFactory.createRunner(commandProcessor, command));
 	}
 
-	public <T extends ActionObject> ActionProcessor<T> get(ActionType<T> command, boolean create) {
+	public <T extends ActionObject> ActionProcessor<T> get(ActionId<T> command, boolean create) {
 		ActionProcessor<T> handler = (ActionProcessor<T>) actionCollections.get(command);
 		if (handler == null && create) {
 			handler = new ActionProcessor<T>(command);
@@ -51,7 +51,7 @@ public class DefaultActionDelegate implements ActionDelegate {
 		return handler;
 	}
 
-	public <T extends ActionObject> void removeActionHandler(ActionType<T> command) {
+	public <T extends ActionObject> void removeActionHandler(ActionId<T> command) {
 		actionCollections.remove(command);
 	}
 
@@ -61,14 +61,14 @@ public class DefaultActionDelegate implements ActionDelegate {
 	public void stop() {
 		actionExecutor.shutdown();
 		synchronized (this) {
-			for (Entry<ActionType<?>, ActionProcessor<?>> entry : actionCollections.entrySet()) {
+			for (Entry<ActionId<?>, ActionProcessor<?>> entry : actionCollections.entrySet()) {
 				entry.getValue().clean();
 			}
 			actionCollections.clear();
 		}
 	}
 
-	public <V, T> void request(ActionType<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback) {
+	public <V, T> void request(ActionId<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback) {
 		RequestAction<V, T> request = new RequestAction<V, T>(requestParameter, callback);
 		Action<RequestAction<V, T>> action = type.create(request);
 		send(action);

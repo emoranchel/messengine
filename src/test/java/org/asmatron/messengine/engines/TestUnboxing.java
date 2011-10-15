@@ -2,11 +2,11 @@ package org.asmatron.messengine.engines;
 
 import static org.junit.Assert.assertEquals;
 
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.ValueAction;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.annotations.EventMethod;
-import org.asmatron.messengine.event.EventType;
+import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.ValueEvent;
 import org.asmatron.messengine.testing.TestEngine;
 import org.junit.After;
@@ -33,13 +33,13 @@ public class TestUnboxing {
 
 	@Test
 	public void shouldUnboxAction() throws Exception {
-		engine.send(new ActionType<ValueAction<String>>("actionUnboxing"), new ValueAction<String>("aaa"));
+		engine.send(new ActionId<ValueAction<String>>("actionUnboxing"), new ValueAction<String>("aaa"));
 		assertEquals("aaa", ac.action);
 	}
 
 	@Test
 	public void shouldUnboxEvent() throws Exception {
-		engine.fireEvent(new EventType<ValueEvent<String>>("eventUnboxing"), new ValueEvent<String>("bbb"));
+		engine.fireEvent(new EventId<ValueEvent<String>>("eventUnboxing"), new ValueEvent<String>("bbb"));
 		assertEquals("bbb", ev.event);
 	}
 

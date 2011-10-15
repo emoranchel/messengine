@@ -4,7 +4,7 @@ import java.util.concurrent.Future;
 
 import org.asmatron.messengine.action.ActionHandler;
 import org.asmatron.messengine.action.ActionObject;
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.EmptyAction;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.action.ResponseCallback;
@@ -12,12 +12,12 @@ import org.asmatron.messengine.action.ValueAction;
 import org.asmatron.messengine.engines.components.EngineStatus;
 import org.asmatron.messengine.event.EmptyEvent;
 import org.asmatron.messengine.event.EventObject;
-import org.asmatron.messengine.event.EventType;
+import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.Listener;
 import org.asmatron.messengine.event.ValueEvent;
 import org.asmatron.messengine.messaging.Message;
 import org.asmatron.messengine.messaging.MessageListener;
-import org.asmatron.messengine.model.ModelType;
+import org.asmatron.messengine.model.ModelId;
 
 public class DefaultEngine implements Engine {
 	private final ActionDelegate actionDelegate;
@@ -40,7 +40,7 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T extends ActionObject> void send(ActionType<T> type, T arg) {
+	public <T extends ActionObject> void send(ActionId<T> type, T arg) {
 		if (status != EngineStatus.STARTED) {
 			throw new IllegalStateException();
 		}
@@ -48,12 +48,12 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public void send(ActionType<EmptyAction> type) {
+	public void send(ActionId<EmptyAction> type) {
 		send(type, EmptyAction.INSTANCE);
 	}
 
 	@Override
-	public <V, T> void request(ActionType<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback) {
+	public <V, T> void request(ActionId<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback) {
 		if (status != EngineStatus.STARTED) {
 			throw new IllegalStateException();
 		}
@@ -61,7 +61,7 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T> void request(ActionType<RequestAction<Void, T>> type, ResponseCallback<T> callback) {
+	public <T> void request(ActionId<RequestAction<Void, T>> type, ResponseCallback<T> callback) {
 		if (status != EngineStatus.STARTED) {
 			throw new IllegalStateException();
 		}
@@ -69,7 +69,7 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T extends EventObject> void fireEvent(EventType<T> eventType, T argument) {
+	public <T extends EventObject> void fireEvent(EventId<T> eventType, T argument) {
 		if (status != EngineStatus.STARTED) {
 			throw new IllegalStateException();
 		}
@@ -77,12 +77,12 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public void fireEvent(EventType<EmptyEvent> type) {
+	public void fireEvent(EventId<EmptyEvent> type) {
 		fireEvent(type, EmptyEvent.INSTANCE);
 	}
 
 	@Override
-	public <T> T get(ModelType<T> type) {
+	public <T> T get(ModelId<T> type) {
 		if (status == EngineStatus.NEW) {
 			throw new IllegalStateException();
 		}
@@ -90,7 +90,7 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T> void set(ModelType<T> type, T value, EventType<ValueEvent<T>> event) {
+	public <T> void set(ModelId<T> type, T value, EventId<ValueEvent<T>> event) {
 		if (status == EngineStatus.STOPED) {
 			throw new IllegalStateException();
 		}
@@ -110,7 +110,7 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T extends ActionObject> void addActionHandler(ActionType<T> actionType, ActionHandler<T> actionHandler) {
+	public <T extends ActionObject> void addActionHandler(ActionId<T> actionType, ActionHandler<T> actionHandler) {
 		if (status == EngineStatus.STOPED) {
 			throw new IllegalStateException();
 		}
@@ -118,17 +118,17 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T extends ActionObject> void removeActionHandler(ActionType<T> action) {
+	public <T extends ActionObject> void removeActionHandler(ActionId<T> action) {
 		actionDelegate.removeActionHandler(action);
 	}
 
 	@Override
-	public <T extends EventObject> void removeListener(EventType<T> type, Listener<T> listener) {
+	public <T extends EventObject> void removeListener(EventId<T> type, Listener<T> listener) {
 		eventDelegate.removeListener(type, listener);
 	}
 
 	@Override
-	public <T extends EventObject> void addListener(EventType<T> type, Listener<T> listener) {
+	public <T extends EventObject> void addListener(EventId<T> type, Listener<T> listener) {
 		if (status == EngineStatus.STOPED) {
 			throw new IllegalStateException();
 		}
@@ -154,12 +154,12 @@ public class DefaultEngine implements Engine {
 	}
 
 	@Override
-	public <T> void fireValueEvent(EventType<ValueEvent<T>> type, T argument) {
+	public <T> void fireValueEvent(EventId<ValueEvent<T>> type, T argument) {
 		fireEvent(type, new ValueEvent<T>(argument));
 	}
 
 	@Override
-	public <T> void sendValueAction(ActionType<ValueAction<T>> action, T argument) {
+	public <T> void sendValueAction(ActionId<ValueAction<T>> action, T argument) {
 		send(action, new ValueAction<T>(argument));
 	}
 

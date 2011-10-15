@@ -1,9 +1,9 @@
 package org.asmatron.messengine.action;
 
-public class ActionType<T extends ActionObject> {
+public class ActionId<T extends ActionObject> {
 	private final String id;
 
-	public ActionType(String id) {
+	public ActionId(String id) {
 		this.id = id;
 	}
 
@@ -22,7 +22,7 @@ public class ActionType<T extends ActionObject> {
 
 	@Override
 	public boolean equals(Object obj) {
-		ActionType<?> other = (ActionType<?>) obj;
+		ActionId<?> other = (ActionId<?>) obj;
 		return this.id.equals(other.id);
 	}
 
@@ -31,7 +31,7 @@ public class ActionType<T extends ActionObject> {
 		return "ACTION:" + id;
 	}
 
-	public static final <T extends ActionObject> ActionType<T> cm(String id) {
-		return new ActionType<T>(id);
+	public static final <T extends ActionObject> ActionId<T> cm(String id) {
+		return new ActionId<T>(id);
 	}
 }

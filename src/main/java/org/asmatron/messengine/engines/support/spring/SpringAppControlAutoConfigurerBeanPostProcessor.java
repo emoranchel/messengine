@@ -4,26 +4,20 @@ import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.MessEngine;
 import org.asmatron.messengine.ViewEngine;
 import org.asmatron.messengine.engines.Engine;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.asmatron.messengine.engines.support.MessagingConfigurator;
-import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
+import org.asmatron.messengine.engines.support.EngineConfigurator;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.DestructionAwareBeanPostProcessor;
 
 public class SpringAppControlAutoConfigurerBeanPostProcessor implements DestructionAwareBeanPostProcessor {
-	private final ViewEngineConfigurator viewEngineConfigurator;
-	private final ControlEngineConfigurator controlEngineConfigurator;
-	private final MessagingConfigurator messagingConfigurator;
+	private final EngineConfigurator engineConfigurator;
 
 	public SpringAppControlAutoConfigurerBeanPostProcessor(Engine engine) {
-		this(engine, engine, engine);
+		engineConfigurator = new EngineConfigurator(engine);
 	}
 
 	public SpringAppControlAutoConfigurerBeanPostProcessor(ViewEngine viewEngine, ControlEngine controlEngine,
 			MessEngine messEngine) {
-		this.viewEngineConfigurator = new ViewEngineConfigurator(viewEngine);
-		this.controlEngineConfigurator = new ControlEngineConfigurator(controlEngine);
-		this.messagingConfigurator = new MessagingConfigurator(messEngine);
+		engineConfigurator = new EngineConfigurator(viewEngine, controlEngine, messEngine);
 	}
 
 	@Override
@@ -33,17 +27,13 @@ public class SpringAppControlAutoConfigurerBeanPostProcessor implements Destruct
 
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-		viewEngineConfigurator.setupViewEngine(bean);
-		controlEngineConfigurator.setupControlEngine(bean);
-		messagingConfigurator.setupMessEngine(bean);
+		engineConfigurator.setup(bean);
 		return bean;
 	}
 
 	@Override
 	public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
-		viewEngineConfigurator.resetViewEngine(bean);
-		controlEngineConfigurator.resetControlEngine(bean);
-		messagingConfigurator.resetMessEngine(bean);
+		engineConfigurator.reset(bean);
 	}
 
 }

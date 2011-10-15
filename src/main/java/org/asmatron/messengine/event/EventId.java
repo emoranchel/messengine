@@ -1,9 +1,9 @@
 package org.asmatron.messengine.event;
 
-public class EventType<T extends EventObject> {
+public class EventId<T extends EventObject> {
 	private final String id;
 
-	public EventType(String id) {
+	public EventId(String id) {
 		this.id = id;
 	}
 
@@ -27,12 +27,12 @@ public class EventType<T extends EventObject> {
 
 	@Override
 	public boolean equals(Object obj) {
-		EventType<?> other = (EventType<?>) obj;
+		EventId<?> other = (EventId<?>) obj;
 		return this.id.equals(other.id);
 	}
 
-	public static final <T extends EventObject> EventType<T> ev(String id) {
-		return new EventType<T>(id);
+	public static final <T extends EventObject> EventId<T> ev(String id) {
+		return new EventId<T>(id);
 	}
 
 }

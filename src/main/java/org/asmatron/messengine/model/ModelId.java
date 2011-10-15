@@ -1,10 +1,10 @@
 package org.asmatron.messengine.model;
 
-public class ModelType<T> {
+public class ModelId<T> {
 	private final String id;
 	private final boolean readOnly;
 
-	public ModelType(String id, boolean readOnly) {
+	public ModelId(String id, boolean readOnly) {
 		this.id = id;
 		this.readOnly = readOnly;
 	}
@@ -24,7 +24,7 @@ public class ModelType<T> {
 
 	@Override
 	public boolean equals(Object obj) {
-		ModelType<?> other = (ModelType<?>) obj;
+		ModelId<?> other = (ModelId<?>) obj;
 		return this.id.equals(other.id);
 	}
 
@@ -33,12 +33,12 @@ public class ModelType<T> {
 		return "MODEL:" + id;
 	}
 
-	public static final <T> ModelType<T> readOnly(String id) {
-		return new ModelType<T>(id, true);
+	public static final <T> ModelId<T> readOnly(String id) {
+		return new ModelId<T>(id, true);
 	}
 
-	public static final <T> ModelType<T> model(String id) {
-		return new ModelType<T>(id, false);
+	public static final <T> ModelId<T> model(String id) {
+		return new ModelId<T>(id, false);
 	}
 
 }

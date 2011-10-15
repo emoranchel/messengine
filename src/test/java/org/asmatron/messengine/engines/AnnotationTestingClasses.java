@@ -1,13 +1,13 @@
 package org.asmatron.messengine.engines;
 
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.action.ValueAction;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.annotations.RequestField;
 import org.asmatron.messengine.annotations.RequestMethod;
-import org.asmatron.messengine.event.EventType;
+import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.ValueEvent;
 
 public interface AnnotationTestingClasses {
@@ -16,10 +16,10 @@ public interface AnnotationTestingClasses {
 		String eventId = "eventId";
 		String requestId = "requestId";
 		String requestFieldId = "requestFieldId";
-		ActionType<RequestAction<String, Integer>> request = ActionType.cm(requestId);
-		ActionType<RequestAction<Void, String>> requestField = ActionType.cm(requestFieldId);
-		ActionType<ValueAction<String>> action = ActionType.cm(actionId);
-		EventType<ValueEvent<String>> event = EventType.ev(eventId);
+		ActionId<RequestAction<String, Integer>> request = ActionId.cm(requestId);
+		ActionId<RequestAction<Void, String>> requestField = ActionId.cm(requestFieldId);
+		ActionId<ValueAction<String>> action = ActionId.cm(actionId);
+		EventId<ValueEvent<String>> event = EventId.ev(eventId);
 	}
 
 	class RequestMethodTester {

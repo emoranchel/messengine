@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.asmatron.messengine.action.ActionHandler;
 import org.asmatron.messengine.action.ActionObject;
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.DuplicateActionHandlerException;
 import org.asmatron.messengine.engines.DefaultActionDelegate;
 import org.asmatron.messengine.testing.support.TestActionDelegate;
@@ -14,7 +14,7 @@ import org.junit.Test;
 
 
 public class TestDefaultCommandEngine {
-	public static final ActionType<DemoCommandObject> cType = new ActionType<DemoCommandObject>("c");
+	public static final ActionId<DemoCommandObject> cType = new ActionId<DemoCommandObject>("c");
 
 	@Test
 	public void testeamesta() throws Exception {

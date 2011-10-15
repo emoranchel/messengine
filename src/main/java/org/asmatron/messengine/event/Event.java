@@ -1,15 +1,15 @@
 package org.asmatron.messengine.event;
 
 public class Event<T extends EventObject> {
-	private final EventType<T> type;
+	private final EventId<T> type;
 	private final T param;
 
-	public Event(EventType<T> type, T param) {
+	public Event(EventId<T> type, T param) {
 		this.type = type;
 		this.param = param;
 	}
 
-	public EventType<T> getType() {
+	public EventId<T> getType() {
 		return type;
 	}
 

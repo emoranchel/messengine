@@ -1,15 +1,15 @@
 package org.asmatron.messengine.action;
 
 public class Action<T extends ActionObject> {
-	private final ActionType<T> type;
+	private final ActionId<T> type;
 	private final T param;
 
-	public Action(ActionType<T> type, T param) {
+	public Action(ActionId<T> type, T param) {
 		this.type = type;
 		this.param = param;
 	}
 
-	public ActionType<T> getType() {
+	public ActionId<T> getType() {
 		return type;
 	}
 
