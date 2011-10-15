@@ -1,4 +1,5 @@
 #summary Why messEngine?
+#labels Featured
 
 = Goals =
 
@@ -53,7 +54,7 @@ Now in code how do this looks?
 
 = CODE EXAMPLE =
 
- # Create a view that SENDS actions and LISTENS events [view.java https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/View.java]
+ # Create a view that SENDS actions and LISTENS events [https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/View.java View.java]
   * See the invocation inside the swing action listener? that's a call to our engine, note the only dependency is the *ViewEngine*
   * Note also that two methods are annotated using *EventMethod* this methods will be called when those events occur.
   * The engine uses *ids* for actions, events and messages. ids are simple Strings, so you better have a good catalog (an interface with those declarations should be enough)
@@ -61,11 +62,34 @@ Now in code how do this looks?
   * @EventsMethod methods receive:
    * () nothing
    * (EventObject) the actual event object
-   * (Object) which must be the wrapped ValueEvent object type see [[autoWrapping]]
+   * (Object) which must be the wrapped ValueEvent object type see AutoWrapping
   * That is true for @ActionMethod and @MessageMethod
- # Create the backing service that HANDLES actions, FIRES events and SENDS messages to other unknown services. [service.java https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/Service.java]
-  *
- # Create another service that just LISTEN to messages.[AnotherService.java https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/AnotherService.java]
-  *
- # Glue it toguether using an engine (and a main method) [Main.java https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/Main.java]
-  * 
+ # Create the backing service that HANDLES actions, FIRES events and SENDS messages to other unknown services. [https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/Service.java Service.java]
+  * Two dependencies one to FIRE events to the view (ControlEngine) and the other to SEND messages to other services (MessEngine)
+ * An @ActionMethod to handle the action sent in the view.
+ # Create another service that just LISTEN to messages.[https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/AnotherService.java AnotherService.java]
+  * No dependencies since we are not going to notify anyone
+  * A @MessageMethod that handles a message sent from a service.
+ # Glue it toguether using an engine (and a main method) [https://messengine.googlecode.com/svn/demo/src/main/java/org/asmastron/messEngineDemo/Main.java Main.java]
+  * First thing create the engines. Note we create a DefaultEngine which is the three engines at the same time.
+  * Now create the objects and send them their dependency, note they don't need and should not know what implementation they are using.
+  * Now configure the objects using an EngineConfigurator so that the annotations do their work.
+  * Finally start the engine if not threads will not be created and nothing will work.
+  * Show your app
+ # Enjoy.
+
+= What's next? =
+
+ * Be sure to check our FrameworkNotes
+ * Want to build an app with this?
+ ** Check BuildingMyFirstApp
+ * Want to migrate your app to this?
+ ** Check MigrationGuide
+ * Want to use us on the web?
+ ** check WebUssage
+ * Asynchronicity? Is this synched or not?
+ ** Go to EngineConfiguration
+ * Got some ideas? SURE!
+ ** Send us a mail, comment add issues we WILL look at them and get in touch with you.
+ * Have questions?
+ ** Check our FAQ
