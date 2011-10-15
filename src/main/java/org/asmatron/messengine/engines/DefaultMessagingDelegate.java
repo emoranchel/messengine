@@ -22,6 +22,7 @@ import org.asmatron.messengine.engines.components.ResponseManager;
 import org.asmatron.messengine.messaging.Message;
 import org.asmatron.messengine.messaging.MessageListener;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class DefaultMessagingDelegate implements MessagingDelegate, Runnable {
 	private static final Log LOG = LogFactory.getLog(DefaultMessagingDelegate.class);
 	private final BlockingQueue<Message<?>> queue;
@@ -78,7 +79,6 @@ public class DefaultMessagingDelegate implements MessagingDelegate, Runnable {
 		queue.offer(message);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
 		try {

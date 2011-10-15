@@ -32,14 +32,12 @@ import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class TestAppControlConfigurer {
 	@Spy
 	private TestEngine engine = new TestEngine();
-	@SuppressWarnings("unchecked")
 	@Captor
 	private ArgumentCaptor<ActionType> actionTypeCaptor;
-	@SuppressWarnings("unchecked")
 	@Captor
 	private ArgumentCaptor<ActionHandler> actionHandlerCaptor;
 	private ViewEngineConfigurator viewConfigurator;
@@ -52,13 +50,13 @@ public class TestAppControlConfigurer {
 		controlConfigurator = new ControlEngineConfigurator(engine);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldBindAnnotationsToActionEngine() throws Exception {
 		RequestMethodTester annotationTester = new RequestMethodTester();
 		controlConfigurator.setupControlEngine(annotationTester);
 
-		verify(engine).addActionHandler(actionTypeCaptor.capture(), actionHandlerCaptor.capture());
+		verify(engine).addActionHandler(actionTypeCaptor.capture(),
+				actionHandlerCaptor.capture());
 		ActionType type = actionTypeCaptor.getValue();
 		ActionHandler handler = actionHandlerCaptor.getValue();
 		assertEquals(TestTypes.requestId, type.getId());
@@ -66,17 +64,18 @@ public class TestAppControlConfigurer {
 
 		assertNotNull(handler);
 		assertFalse(annotationTester.requestHandled);
-		handler.handle(new RequestAction<String, Integer>("5", EmptyCallback.get(Integer.class)));
+		handler.handle(new RequestAction<String, Integer>("5", EmptyCallback
+				.get(Integer.class)));
 		assertTrue(annotationTester.requestHandled);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldBindActionMethodsCorrectly() throws Exception {
 		ActionMethodTester annotationTester = new ActionMethodTester();
 		controlConfigurator.setupControlEngine(annotationTester);
 
-		verify(engine).addActionHandler(actionTypeCaptor.capture(), actionHandlerCaptor.capture());
+		verify(engine).addActionHandler(actionTypeCaptor.capture(),
+				actionHandlerCaptor.capture());
 		ActionType type = actionTypeCaptor.getValue();
 		ActionHandler handler = actionHandlerCaptor.getValue();
 
@@ -111,12 +110,13 @@ public class TestAppControlConfigurer {
 		RequestFieldTester annotationTester = new RequestFieldTester();
 		controlConfigurator.setupControlEngine(annotationTester);
 		final AtomicReference<String> val = new AtomicReference<String>(null);
-		engine.request(TestTypes.requestField, null, new ResponseCallback<String>() {
-			@Override
-			public void onResponse(String t) {
-				val.set(t);
-			}
-		});
+		engine.request(TestTypes.requestField, null,
+				new ResponseCallback<String>() {
+					@Override
+					public void onResponse(String t) {
+						val.set(t);
+					}
+				});
 		assertEquals("abc", val.get());
 	}
 

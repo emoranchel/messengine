@@ -15,7 +15,6 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 
 import org.asmatron.messengine.engines.components.MessageConsumer;
-import org.asmatron.messengine.engines.components.ResponseManager;
 import org.asmatron.messengine.messaging.Message;
 import org.asmatron.messengine.messaging.MessageListener;
 import org.asmatron.messengine.testing.TestMessage;
@@ -26,6 +25,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class TestDefaultMessEngine {
 	@InjectMocks
 	private DefaultMessagingDelegate messEngine = new DefaultMessagingDelegate();
@@ -39,12 +39,8 @@ public class TestDefaultMessEngine {
 	private ExecutorService messageExecutor;
 	@Mock
 	private ExecutorService engineExecutor;
-	@SuppressWarnings("unused")
-	@Mock
-	private ResponseManager responseManager;
 
 	String testType = "test";
-	@SuppressWarnings("unchecked")
 	@Mock
 	private Message message;
 
@@ -72,7 +68,6 @@ public class TestDefaultMessEngine {
 		verify(engineExecutor).execute(messEngine);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSendAMessage() throws Exception {
 		when(message.getBody()).thenReturn(new String());

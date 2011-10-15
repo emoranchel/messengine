@@ -9,8 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.engines.components.EngineStatus;
 import org.asmatron.messengine.model.ModelType;
 
-
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class DefaultModelDelegate implements ModelDelegate {
 	private static final String ERROR_ACCESS = "Model is accessed but is not yet set, this call will block until value is set or engine is shutdown.";
 	private final static Log log = LogFactory.getLog(ModelType.class);
