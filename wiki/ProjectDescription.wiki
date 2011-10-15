@@ -82,14 +82,14 @@ Now in code how do this looks?
 
  * Be sure to check our FrameworkNotes
  * Want to build an app with this?
- ** Check BuildingMyFirstApp
+  * Check BuildingMyFirstApp
  * Want to migrate your app to this?
- ** Check MigrationGuide
+  * Check MigrationGuide
  * Want to use us on the web?
- ** check WebUssage
+  * check WebUssage
  * Asynchronicity? Is this synched or not?
- ** Go to EngineConfiguration
+  * Go to EngineConfiguration
  * Got some ideas? SURE!
- ** Send us a mail, comment add issues we WILL look at them and get in touch with you.
+  * Send us a mail, comment add issues we WILL look at them and get in touch with you.
  * Have questions?
- ** Check our FAQ
+  * Check our FAQ
