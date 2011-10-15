@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.asmatron.messengine.appControl.control.DefaultEventDelegate;
+import org.asmatron.messengine.engines.DefaultEventDelegate;
 import org.asmatron.messengine.event.EventExecutionMode;
 import org.asmatron.messengine.event.EventObject;
 import org.asmatron.messengine.event.EventType;
