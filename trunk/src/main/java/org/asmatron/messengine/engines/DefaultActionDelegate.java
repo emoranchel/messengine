@@ -17,7 +17,7 @@ import org.asmatron.messengine.engines.components.ActionRunnerFactory;
 import org.asmatron.messengine.engines.components.ActionThreadFactory;
 import org.asmatron.messengine.engines.components.DefaultActionRunnerFactory;
 
-
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class DefaultActionDelegate implements ActionDelegate {
 	private Map<ActionType<?>, ActionProcessor<?>> actionCollections = new HashMap<ActionType<?>, ActionProcessor<?>>();
 	private ExecutorService actionExecutor;
@@ -37,13 +37,11 @@ public class DefaultActionDelegate implements ActionDelegate {
 		commandProcessor.handle(commandHandler);
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	public void send(Action<?> command) {
 		ActionProcessor commandProcessor = get(command.getType(), false);
 		actionExecutor.submit(runnerFactory.createRunner(commandProcessor, command));
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T extends ActionObject> ActionProcessor<T> get(ActionType<T> command, boolean create) {
 		ActionProcessor<T> handler = (ActionProcessor<T>) actionCollections.get(command);
 		if (handler == null && create) {

@@ -4,10 +4,7 @@ import java.io.Serializable;
 
 import org.asmatron.messengine.messaging.Message;
 
-
 public class TestMessage<T extends Serializable> implements Message<T> {
-
-	private static final long serialVersionUID = 1L;
 
 	private String type;
 	private T body;

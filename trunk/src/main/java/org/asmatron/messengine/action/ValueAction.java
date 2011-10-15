@@ -1,5 +1,6 @@
 package org.asmatron.messengine.action;
 
+@SuppressWarnings("rawtypes")
 public class ValueAction<T> extends ActionObject {
 	private final T value;
 
@@ -20,7 +21,6 @@ public class ValueAction<T> extends ActionObject {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

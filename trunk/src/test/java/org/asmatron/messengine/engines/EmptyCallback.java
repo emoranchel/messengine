@@ -2,7 +2,7 @@ package org.asmatron.messengine.engines;
 
 import org.asmatron.messengine.action.ResponseCallback;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class EmptyCallback<T> implements ResponseCallback<T> {
 
 	private static final ResponseCallback<Integer> INSTANCE = new EmptyCallback();

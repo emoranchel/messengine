@@ -6,8 +6,7 @@ import java.util.Map;
 import org.asmatron.messengine.engines.DefaultModelDelegate;
 import org.asmatron.messengine.model.ModelType;
 
-
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class TestModelDelegate extends DefaultModelDelegate {
 	private Map model;
 

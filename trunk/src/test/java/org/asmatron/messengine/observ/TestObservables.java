@@ -6,12 +6,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-import org.asmatron.messengine.observ.ObservValue;
-import org.asmatron.messengine.observ.Observable;
-import org.asmatron.messengine.observ.ObserveObject;
-import org.asmatron.messengine.observ.ObservePropertyChanged;
-import org.asmatron.messengine.observ.ObservedProperty;
-import org.asmatron.messengine.observ.Observer;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
@@ -19,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class TestObservables {
 	@Mock
 	private Observer<ObserveObject> observer;
@@ -66,7 +60,6 @@ public class TestObservables {
 		verify(observer, never()).observe(ObserveObject.EMPTY);
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	@Test
 	public void testProperties() throws Exception {
 		ObservedProperty<TestObservables, String> property = new ObservedProperty<TestObservables, String>(this);

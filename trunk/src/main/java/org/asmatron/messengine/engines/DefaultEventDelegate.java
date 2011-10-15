@@ -19,11 +19,10 @@ import org.asmatron.messengine.event.EventObject;
 import org.asmatron.messengine.event.EventType;
 import org.asmatron.messengine.event.Listener;
 
-
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class DefaultEventDelegate implements EventDelegate {
 	private final static Log log = LogFactory.getLog(Event.class);
 
-	@SuppressWarnings("unchecked")
 	private Map pendingEvents = new HashMap();
 
 	private Map<EventType<?>, EventCollection<?>> eventCollections = new HashMap<EventType<?>, EventCollection<?>>();
@@ -37,7 +36,6 @@ public class DefaultEventDelegate implements EventDelegate {
 		this.eventExecutor = eventExecutor;
 	}
 
-	@SuppressWarnings({ "unchecked" })
 	private <T extends EventObject> EventCollection<T> get(EventType<T> type) {
 		EventCollection eventCollection = null;
 		synchronized (this) {
@@ -50,13 +48,11 @@ public class DefaultEventDelegate implements EventDelegate {
 		return eventCollection;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends EventObject> void fireLater(EventType<T> type, T argument) {
 		pendingEvents.put(type, argument);
 	}
 
-	@SuppressWarnings("unchecked")
 	public void start() {
 		Set entrySet = pendingEvents.entrySet();
 		for (Object o : entrySet) {
@@ -148,7 +144,6 @@ public class DefaultEventDelegate implements EventDelegate {
 		private T lastEvent;
 		private final EventType<T> eventType;
 
-		@SuppressWarnings("unchecked")
 		public EventCollection(EventType<?> eventType) {
 			this.eventType = (EventType<T>) eventType;
 		}

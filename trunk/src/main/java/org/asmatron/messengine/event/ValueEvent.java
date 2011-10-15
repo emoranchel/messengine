@@ -1,5 +1,6 @@
 package org.asmatron.messengine.event;
 
+@SuppressWarnings("rawtypes")
 public class ValueEvent<T> extends EventObject {
 	private final T value;
 
@@ -20,7 +21,6 @@ public class ValueEvent<T> extends EventObject {
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
