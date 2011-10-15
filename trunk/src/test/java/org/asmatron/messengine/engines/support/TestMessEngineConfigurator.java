@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.asmatron.messengine.MessEngine;
 import org.asmatron.messengine.engines.support.MessagingConfigurator;
+import org.asmatron.messengine.messaging.SimpleMessage;
 import org.asmatron.messengine.testing.TestEngine;
 import org.junit.Test;
 import org.mockito.Spy;

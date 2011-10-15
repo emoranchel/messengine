@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.action.ActionObject;
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.annotations.RequestField;
@@ -64,7 +64,7 @@ public class ControlEngineConfigurator {
 	private void addRequestFieldHandler(Object object, Field field) {
 		checkControlEngine();
 		RequestField annotation = field.getAnnotation(RequestField.class);
-		ActionType<RequestAction<Object, Object>> actionType = ActionType.cm(annotation.value());
+		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
 		RequestFieldHandler actionHandler = new RequestFieldHandler(object, field);
 		controlEngine.addActionHandler(actionType, actionHandler);
 	}
@@ -72,7 +72,7 @@ public class ControlEngineConfigurator {
 	private void addRequestMethodHandler(Object object, Method method) {
 		checkControlEngine();
 		RequestMethod annotation = method.getAnnotation(RequestMethod.class);
-		ActionType<RequestAction<Object, Object>> actionType = ActionType.cm(annotation.value());
+		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
 		RequestMethodHandler actionHandler = new RequestMethodHandler(object, method);
 		controlEngine.addActionHandler(actionType, actionHandler);
 	}
@@ -80,7 +80,7 @@ public class ControlEngineConfigurator {
 	private void addActionMethodHandler(Object object, Method method) {
 		checkControlEngine();
 		ActionMethod annotation = method.getAnnotation(ActionMethod.class);
-		ActionType<ActionObject> actionType = ActionType.cm(annotation.value());
+		ActionId<ActionObject> actionType = ActionId.cm(annotation.value());
 		ActionMethodHandler actionHandler = new ActionMethodHandler(object, method);
 		controlEngine.addActionHandler(actionType, actionHandler);
 	}
@@ -88,21 +88,21 @@ public class ControlEngineConfigurator {
 	private void removeRequestFieldHandler(Object object, Field field) {
 		checkControlEngine();
 		RequestField annotation = field.getAnnotation(RequestField.class);
-		ActionType<RequestAction<Object, Object>> actionType = ActionType.cm(annotation.value());
+		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
 		controlEngine.removeActionHandler(actionType);
 	}
 
 	private void removeActionMethodHandler(Object object, Method method) {
 		checkControlEngine();
 		ActionMethod annotation = method.getAnnotation(ActionMethod.class);
-		ActionType<ActionObject> actionType = ActionType.cm(annotation.value());
+		ActionId<ActionObject> actionType = ActionId.cm(annotation.value());
 		controlEngine.removeActionHandler(actionType);
 	}
 
 	private void removeRequestMethodHandler(Object object, Method method) {
 		checkControlEngine();
 		RequestMethod annotation = method.getAnnotation(RequestMethod.class);
-		ActionType<RequestAction<Object, Object>> actionType = ActionType.cm(annotation.value());
+		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
 		controlEngine.removeActionHandler(actionType);
 	}
 

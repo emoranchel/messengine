@@ -2,16 +2,16 @@ package org.asmatron.messengine.engines.components;
 
 import org.asmatron.messengine.action.ActionHandler;
 import org.asmatron.messengine.action.ActionObject;
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.DuplicateActionHandlerException;
 import org.asmatron.messengine.action.NoHandlerException;
 
 
 public class ActionProcessor<T extends ActionObject> {
 	private ActionHandler<T> handler;
-	private ActionType<T> type;
+	private ActionId<T> type;
 
-	public ActionProcessor(ActionType<T> type) {
+	public ActionProcessor(ActionId<T> type) {
 		this.type = type;
 	}
 

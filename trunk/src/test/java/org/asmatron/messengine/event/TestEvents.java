@@ -7,13 +7,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.asmatron.messengine.engines.DefaultEventDelegate;
 import org.asmatron.messengine.event.EventExecutionMode;
 import org.asmatron.messengine.event.EventObject;
-import org.asmatron.messengine.event.EventType;
+import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.Listener;
 import org.junit.Test;
 
 
 public class TestEvents {
-	public static final EventType<CustomEvent> aType = new EventType<CustomEvent>("a");
+	public static final EventId<CustomEvent> aType = new EventId<CustomEvent>("a");
 
 	@Test
 	public void shouldTestEventEngine() throws Exception {

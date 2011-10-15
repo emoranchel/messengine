@@ -6,7 +6,7 @@ import java.util.List;
 import org.asmatron.messengine.ViewEngine;
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.event.EventObject;
-import org.asmatron.messengine.event.EventType;
+import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.util.AppAnnotationUtils;
 
 
@@ -46,7 +46,7 @@ public class ViewEngineConfigurator {
 		checkViewEngine();
 		EventMethod annotation = method.getAnnotation(EventMethod.class);
 		String id = annotation.value();
-		EventType<EventObject> eventType = EventType.ev(id);
+		EventId<EventObject> eventType = EventId.ev(id);
 		EventMethodListener listener = new EventMethodListener(object, method, annotation.mode(), annotation.eager());
 		viewEngine.addListener(eventType, listener);
 	}
@@ -55,7 +55,7 @@ public class ViewEngineConfigurator {
 		checkViewEngine();
 		EventMethod annotation = method.getAnnotation(EventMethod.class);
 		String id = annotation.value();
-		EventType<EventObject> eventType = EventType.ev(id);
+		EventId<EventObject> eventType = EventId.ev(id);
 		EventMethodListener listener = new EventMethodListener(object, method, annotation.mode(), annotation.eager());
 		viewEngine.removeListener(eventType, listener);
 	}

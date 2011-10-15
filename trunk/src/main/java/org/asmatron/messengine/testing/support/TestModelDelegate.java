@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.asmatron.messengine.engines.DefaultModelDelegate;
-import org.asmatron.messengine.model.ModelType;
+import org.asmatron.messengine.model.ModelId;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class TestModelDelegate extends DefaultModelDelegate {
@@ -15,13 +15,13 @@ public class TestModelDelegate extends DefaultModelDelegate {
 	}
 
 	@Override
-	public <T> T get(ModelType<T> type) {
+	public <T> T get(ModelId<T> type) {
 		T value = (T) model.get(type);
 		return value;
 	}
 
 	@Override
-	public <T> void set(ModelType<T> type, T value) {
+	public <T> void set(ModelId<T> type, T value) {
 		model.put(type, value);
 	}
 

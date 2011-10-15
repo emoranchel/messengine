@@ -16,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.event.Event;
 import org.asmatron.messengine.event.EventExecutionMode;
 import org.asmatron.messengine.event.EventObject;
-import org.asmatron.messengine.event.EventType;
+import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.Listener;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -25,7 +25,7 @@ public class DefaultEventDelegate implements EventDelegate {
 
 	private Map pendingEvents = new HashMap();
 
-	private Map<EventType<?>, EventCollection<?>> eventCollections = new HashMap<EventType<?>, EventCollection<?>>();
+	private Map<EventId<?>, EventCollection<?>> eventCollections = new HashMap<EventId<?>, EventCollection<?>>();
 	private ExecutorService eventExecutor;
 
 	public DefaultEventDelegate() {
@@ -36,7 +36,7 @@ public class DefaultEventDelegate implements EventDelegate {
 		this.eventExecutor = eventExecutor;
 	}
 
-	private <T extends EventObject> EventCollection<T> get(EventType<T> type) {
+	private <T extends EventObject> EventCollection<T> get(EventId<T> type) {
 		EventCollection eventCollection = null;
 		synchronized (this) {
 			eventCollection = eventCollections.get(type);
@@ -49,7 +49,7 @@ public class DefaultEventDelegate implements EventDelegate {
 	}
 
 	@Override
-	public <T extends EventObject> void fireLater(EventType<T> type, T argument) {
+	public <T extends EventObject> void fireLater(EventId<T> type, T argument) {
 		pendingEvents.put(type, argument);
 	}
 
@@ -57,7 +57,7 @@ public class DefaultEventDelegate implements EventDelegate {
 		Set entrySet = pendingEvents.entrySet();
 		for (Object o : entrySet) {
 			Entry entry = (Entry) o;
-			get((EventType) entry.getKey()).fire((EventObject) entry.getValue());
+			get((EventId) entry.getKey()).fire((EventObject) entry.getValue());
 		}
 		pendingEvents.clear();
 	}
@@ -65,7 +65,7 @@ public class DefaultEventDelegate implements EventDelegate {
 	public void stop() {
 		eventExecutor.shutdown();
 		synchronized (this) {
-			for (Entry<EventType<?>, EventCollection<?>> entry : eventCollections.entrySet()) {
+			for (Entry<EventId<?>, EventCollection<?>> entry : eventCollections.entrySet()) {
 				entry.getValue().listeners.clear();
 			}
 			eventCollections.clear();
@@ -73,7 +73,7 @@ public class DefaultEventDelegate implements EventDelegate {
 	}
 
 	@Override
-	public <T extends EventObject> void removeListener(EventType<T> type, Listener<T> listener) {
+	public <T extends EventObject> void removeListener(EventId<T> type, Listener<T> listener) {
 		EventCollection<T> eventCollection = get(type);
 		synchronized (eventCollection) {
 			eventCollection.listeners.remove(listener);
@@ -81,7 +81,7 @@ public class DefaultEventDelegate implements EventDelegate {
 	}
 
 	@Override
-	public <T extends EventObject> void addListener(EventType<T> type, Listener<T> listener) {
+	public <T extends EventObject> void addListener(EventId<T> type, Listener<T> listener) {
 		if (listener != null) {
 			EventCollection<T> eventCollection = get(type);
 			if (listener.isEager() && eventCollection.lastEvent != null) {
@@ -99,7 +99,7 @@ public class DefaultEventDelegate implements EventDelegate {
 	}
 
 	@Override
-	public <T extends EventObject> void fireEvent(EventType<T> type, T argument) {
+	public <T extends EventObject> void fireEvent(EventId<T> type, T argument) {
 		get(type).fire(argument);
 	}
 
@@ -142,10 +142,10 @@ public class DefaultEventDelegate implements EventDelegate {
 	class EventCollection<T extends EventObject> {
 		List<Listener<T>> listeners = new ArrayList<Listener<T>>();
 		private T lastEvent;
-		private final EventType<T> eventType;
+		private final EventId<T> eventType;
 
-		public EventCollection(EventType<?> eventType) {
-			this.eventType = (EventType<T>) eventType;
+		public EventCollection(EventId<?> eventType) {
+			this.eventType = (EventId<T>) eventType;
 		}
 
 		public void fire(T param) {

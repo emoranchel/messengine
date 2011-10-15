@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.asmatron.messengine.action.ActionHandler;
-import org.asmatron.messengine.action.ActionType;
+import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.action.ResponseCallback;
 import org.asmatron.messengine.action.ValueAction;
@@ -37,7 +37,7 @@ public class TestAppControlConfigurer {
 	@Spy
 	private TestEngine engine = new TestEngine();
 	@Captor
-	private ArgumentCaptor<ActionType> actionTypeCaptor;
+	private ArgumentCaptor<ActionId> actionTypeCaptor;
 	@Captor
 	private ArgumentCaptor<ActionHandler> actionHandlerCaptor;
 	private ViewEngineConfigurator viewConfigurator;
@@ -57,7 +57,7 @@ public class TestAppControlConfigurer {
 
 		verify(engine).addActionHandler(actionTypeCaptor.capture(),
 				actionHandlerCaptor.capture());
-		ActionType type = actionTypeCaptor.getValue();
+		ActionId type = actionTypeCaptor.getValue();
 		ActionHandler handler = actionHandlerCaptor.getValue();
 		assertEquals(TestTypes.requestId, type.getId());
 		assertEquals(TestTypes.request, type);
@@ -76,7 +76,7 @@ public class TestAppControlConfigurer {
 
 		verify(engine).addActionHandler(actionTypeCaptor.capture(),
 				actionHandlerCaptor.capture());
-		ActionType type = actionTypeCaptor.getValue();
+		ActionId type = actionTypeCaptor.getValue();
 		ActionHandler handler = actionHandlerCaptor.getValue();
 
 		assertEquals(TestTypes.actionId, type.getId());

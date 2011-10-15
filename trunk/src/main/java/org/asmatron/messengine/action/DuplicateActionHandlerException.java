@@ -3,16 +3,16 @@ package org.asmatron.messengine.action;
 public class DuplicateActionHandlerException extends RuntimeException {
 	private final ActionHandler<?> newHandler;
 	private final ActionHandler<?> oldHandler;
-	private final ActionType<?> action;
+	private final ActionId<?> action;
 
-	public DuplicateActionHandlerException(ActionHandler<?> newHandler, ActionHandler<?> oldHandler, ActionType<?> action) {
+	public DuplicateActionHandlerException(ActionHandler<?> newHandler, ActionHandler<?> oldHandler, ActionId<?> action) {
 		super(getMessage(newHandler, oldHandler, action));
 		this.newHandler = newHandler;
 		this.oldHandler = oldHandler;
 		this.action = action;
 	}
 
-	private static String getMessage(ActionHandler<?> newHandler, ActionHandler<?> oldHandler, ActionType<?> action) {
+	private static String getMessage(ActionHandler<?> newHandler, ActionHandler<?> oldHandler, ActionId<?> action) {
 		StringBuffer str = new StringBuffer();
 		str.append("Duplicate handler for action:");
 		str.append(action);
@@ -35,7 +35,7 @@ public class DuplicateActionHandlerException extends RuntimeException {
 		return oldHandler;
 	}
 
-	public ActionType<?> getAction() {
+	public ActionId<?> getAction() {
 		return action;
 	}
 

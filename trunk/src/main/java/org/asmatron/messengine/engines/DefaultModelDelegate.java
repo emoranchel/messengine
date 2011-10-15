@@ -7,12 +7,12 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.engines.components.EngineStatus;
-import org.asmatron.messengine.model.ModelType;
+import org.asmatron.messengine.model.ModelId;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class DefaultModelDelegate implements ModelDelegate {
 	private static final String ERROR_ACCESS = "Model is accessed but is not yet set, this call will block until value is set or engine is shutdown.";
-	private final static Log log = LogFactory.getLog(ModelType.class);
+	private final static Log log = LogFactory.getLog(ModelId.class);
 	private Map model;
 	private EngineStatus status = EngineStatus.NEW;
 
@@ -21,7 +21,7 @@ public class DefaultModelDelegate implements ModelDelegate {
 	}
 
 	@Override
-	public <T> T get(ModelType<T> type) {
+	public <T> T get(ModelId<T> type) {
 		if (status != EngineStatus.STARTED) {
 			throw new IllegalStateException("Model cannot be used until started, currently:" + status);
 		}
@@ -44,7 +44,7 @@ public class DefaultModelDelegate implements ModelDelegate {
 	}
 
 	@Override
-	public <T> void set(ModelType<T> type, T value) {
+	public <T> void set(ModelId<T> type, T value) {
 		if (status == EngineStatus.STOPED) {
 			throw new IllegalStateException("Engine stoped cannot set model now." + status);
 		}
@@ -65,7 +65,7 @@ public class DefaultModelDelegate implements ModelDelegate {
 	}
 
 	@Override
-	public <T> T forceGet(ModelType<T> type) {
+	public <T> T forceGet(ModelId<T> type) {
 		return (T) model.get(type);
 	}
 
