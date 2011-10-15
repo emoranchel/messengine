@@ -204,6 +204,7 @@
 		</plugins>
 	</reporting>
 
+ <!--  AVOID RELEASE REPOSITORY/PLUGINREPOSITORY: -->
   <repositories></repositories>
 
   <pluginRepositories></pluginRepositories>
