@@ -1,4 +1,4 @@
-package org.asmatron.messengine.messengine.support;
+package org.asmatron.messengine.messaging.support;
 
 import static org.junit.Assert.assertEquals;
 

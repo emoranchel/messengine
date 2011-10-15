@@ -1,10 +1,12 @@
-package org.asmatron.messengine.messengine.impl;
+package org.asmatron.messengine.messaging.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.asmatron.messengine.messaging.Message;
@@ -16,6 +18,7 @@ import org.junit.Test;
 public class IntegrationTestMessEngine {
 	@Test(timeout = 500)
 	public void shouldListenFooMessage() throws Exception {
+		final Semaphore lock = new Semaphore(0);
 		final StringBuilder actualBody = new StringBuilder();
 		final String expectedBody = "Hello World!";
 		DefaultMessEngine engine = new DefaultMessEngine();
@@ -25,24 +28,20 @@ public class IntegrationTestMessEngine {
 			@Override
 			public void onMessage(Message<String> message) {
 				actualBody.append((String) message.getBody());
-
+				lock.release();
 			}
 		};
 		final String type = "test";
 		engine.addMessageListener(type, listener);
 		engine.send(new TestMessage<String>(type, expectedBody));
-		Pause.pause(new Condition("Waiting for the message to be processed.") {
-			@Override
-			public boolean test() {
-				return actualBody.length() > 0;
-			}
-		});
+		lock.tryAcquire(3, TimeUnit.SECONDS);
 		assertEquals(expectedBody, actualBody.toString());
 		engine.shutdown();
 	}
 
 	@Test(timeout = 1000)
 	public void shouldListen1000FooMessages() throws Exception {
+		final Semaphore lock = new Semaphore(0);
 		final String expectedBody = "HELLO WORLD!";
 		DefaultMessEngine engine = new DefaultMessEngine();
 		engine.init();
@@ -51,6 +50,7 @@ public class IntegrationTestMessEngine {
 			@Override
 			public void onMessage(Message<String> message) {
 				counter.incrementAndGet();
+				lock.release();
 			}
 		};
 		final String type = "foo";
@@ -60,18 +60,14 @@ public class IntegrationTestMessEngine {
 		for (int i = 0; i < totalMessages; i++) {
 			engine.send(message);
 		}
-		Pause.pause(new Condition("Waiting for " + totalMessages
-				+ " messages to complete.") {
-			@Override
-			public boolean test() {
-				return counter.get() == totalMessages;
-			}
-		});
+		lock.tryAcquire(totalMessages, 3, TimeUnit.SECONDS);
+		assertEquals(totalMessages, counter.get());
 		engine.shutdown();
 	}
 
 	@Test(timeout = 1000)
 	public void shouldHaveManyListenersForTheSameMessageType() throws Exception {
+		final Semaphore lock = new Semaphore(0);
 		DefaultMessEngine engine = new DefaultMessEngine();
 		engine.init();
 		final AtomicInteger counter = new AtomicInteger();
@@ -79,12 +75,14 @@ public class IntegrationTestMessEngine {
 			@Override
 			public void onMessage(Message<String> message) {
 				counter.incrementAndGet();
+				lock.release();
 			}
 		};
 		final MessageListener<Message<String>> listenerB = new MessageListener<Message<String>>() {
 			@Override
 			public void onMessage(Message<String> message) {
 				counter.incrementAndGet();
+				lock.release();
 			}
 		};
 		final String type = "foo";
@@ -96,15 +94,8 @@ public class IntegrationTestMessEngine {
 		for (int i = 0; i < totalMessages; i++) {
 			engine.send(message);
 		}
-		
-		Pause.pause(new Condition("Waiting for " + totalMessages
-				+ " messages to complete.") {
-			@Override
-			public boolean test() {
-				// should increment per message in both listeners
-				return counter.get() == totalMessages * 2;
-			}
-		});
+		lock.tryAcquire(totalMessages * 2, 3, TimeUnit.SECONDS);
+		assertEquals(totalMessages * 2, counter.get());
 		engine.shutdown();
 	}
 
