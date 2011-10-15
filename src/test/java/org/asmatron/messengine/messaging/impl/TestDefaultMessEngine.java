@@ -1,4 +1,4 @@
-package org.asmatron.messengine.messengine.impl;
+package org.asmatron.messengine.messaging.impl;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
