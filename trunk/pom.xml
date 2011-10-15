@@ -3,9 +3,65 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.asmatron</groupId>
 	<artifactId>messengine</artifactId>
+	<packaging>jar</packaging>
+	<name>MessEngine</name>
 	<version>0.1.0</version>
-	<name>messEngine</name>
+	<description>Simple Messaging engine for internal java communication</description>
+	<url>http://code.google.com/p/messengine/</url>
 
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:http://messengine.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/trunk/</developerConnection>
+    <url>http://messengine.googlecode.com/svn/trunk</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>emoranchel@gmail.com</id>
+      <name>Eduardo Moranchel</name>
+      <email>emoranchel@gmail.com</email>
+    </developer>
+    <developer>
+      <id>f.gonzalez.reynaga@gmail.com</id>
+      <name>Fernando Gonzalez</name>
+      <email>f.gonzalez.reynaga@gmail.com</email>
+    </developer>
+    <developer>
+      <id>felipe2610@gmail.com</id>
+      <name>Felipe Juarez</name>
+      <email>felipe2610@gmail.com</email>
+    </developer>
+    <developer>
+      <id>Aledis82@gmail.com</id>
+      <name>Dong Lee</name>
+      <email>Aledis82@gmail.com</email>
+    </developer>
+    <developer>
+      <id>webtallica@gmail.com</id>
+      <name>Julio Arroyo</name>
+      <email>webtallica@gmail.com</email>
+    </developer>
+    <developer>
+      <id>ismael.osornio@gmail.com</id>
+      <name>Ismael Osornio</name>
+      <email>ismael.osornio@gmail.com</email>
+    </developer>
+  </developers>
+  
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -47,6 +103,7 @@
 			<version>1.6.1</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -79,6 +136,7 @@
 			</plugin>
 		</plugins>
 	</build>
+
 	<reporting>
 		<plugins>
 			<plugin>
@@ -146,4 +204,8 @@
 		</plugins>
 	</reporting>
 
+  <repositories></repositories>
+
+  <pluginRepositories></pluginRepositories>
+  
 </project>
