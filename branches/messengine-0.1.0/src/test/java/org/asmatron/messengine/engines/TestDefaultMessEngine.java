@@ -18,6 +18,7 @@ import org.asmatron.messengine.engines.components.MessageConsumer;
 import org.asmatron.messengine.messaging.Message;
 import org.asmatron.messengine.messaging.MessageListener;
 import org.asmatron.messengine.testing.TestMessage;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -49,6 +50,13 @@ public class TestDefaultMessEngine {
 		MockitoAnnotations.initMocks(this);
 		setValueToPrivateField(messEngine, "messageExecutor", messageExecutor);
 		setValueToPrivateField(messEngine, "engineExecutor", engineExecutor);
+		messEngine.start();
+		verify(engineExecutor).execute(messEngine);
+	}
+
+	@After
+	public void teardown() throws Exception {
+		messEngine.stop();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -60,12 +68,6 @@ public class TestDefaultMessEngine {
 	public void shouldFailBecauseMessageTypeIsInvalid() throws Exception {
 		when(message.getBody()).thenReturn(new String());
 		messEngine.send(message);
-	}
-
-	@Test
-	public void shouldInitMessEngine() throws Exception {
-		messEngine.start();
-		verify(engineExecutor).execute(messEngine);
 	}
 
 	@Test
