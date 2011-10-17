@@ -5,7 +5,7 @@
 	<artifactId>messengine</artifactId>
 	<packaging>jar</packaging>
 	<name>MessEngine</name>
-	<version>0.1.0</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<description>Simple Messaging engine for internal java communication</description>
 	<url>http://code.google.com/p/messengine/</url>
 
