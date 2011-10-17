@@ -4,7 +4,7 @@
 	<artifactId>messengine</artifactId>
 	<packaging>jar</packaging>
 	<name>MessEngine</name>
-	<version>0.1.1-SNAPSHOT</version>
+	<version>0.1.1</version>
 	<description>Simple Messaging engine for internal java communication</description>
 	<url>http://code.google.com/p/messengine/</url>
 
@@ -23,9 +23,9 @@
   </licenses>
 
   <scm>
-    <connection>scm:svn:http://messengine.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/trunk/</developerConnection>
-    <url>http://messengine.googlecode.com/svn/trunk</url>
+    <connection>scm:svn:http://messengine.googlecode.com/svn/tags/messengine-0.1.1</connection>
+    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/tags/messengine-0.1.1</developerConnection>
+    <url>http://messengine.googlecode.com/svn/tags/messengine-0.1.1</url>
   </scm>
 
   <developers>
