@@ -15,6 +15,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 
 import org.asmatron.messengine.engines.components.MessageConsumer;
+import org.asmatron.messengine.engines.components.ResponseManager;
 import org.asmatron.messengine.messaging.Message;
 import org.asmatron.messengine.messaging.MessageListener;
 import org.asmatron.messengine.testing.TestMessage;
@@ -39,6 +40,8 @@ public class TestDefaultMessEngine {
 	private ExecutorService messageExecutor;
 	@Mock
 	private ExecutorService engineExecutor;
+	@Mock
+	private ResponseManager responseManager;
 
 	String testType = "test";
 	@Mock
@@ -96,6 +99,7 @@ public class TestDefaultMessEngine {
 
 		messEngine.run();
 
+		verify(responseManager).notifyResponse(message);
 		verify(messageExecutor).execute(any(MessageConsumer.class));
 	}
 
@@ -112,6 +116,7 @@ public class TestDefaultMessEngine {
 		messEngine.stop();
 
 		verify(engineExecutor).shutdownNow();
+		verify(responseManager).shutdown();
 		verify(messageExecutor).shutdownNow();
 	}
 
