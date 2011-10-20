@@ -9,59 +9,59 @@
 	<description>Simple messEngine swing demo</description>
 	<url>http://code.google.com/p/messengine/</url>
 
-  <parent>
-    <groupId>org.sonatype.oss</groupId>
-    <artifactId>oss-parent</artifactId>
-    <version>7</version>
-  </parent>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-  <scm>
-    <connection>scm:svn:http://messengine.googlecode.com/svn/demo/trunk</connection>
-    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/demo/trunk</developerConnection>
-    <url>http://messengine.googlecode.com/svn/demo/trunk</url>
-  </scm>
+	<scm>
+		<connection>scm:svn:http://messengine.googlecode.com/svn/demo/trunk</connection>
+		<developerConnection>scm:svn:https://messengine.googlecode.com/svn/demo/trunk</developerConnection>
+		<url>http://messengine.googlecode.com/svn/demo/trunk</url>
+	</scm>
 
-  <developers>
-    <developer>
-      <id>emoranchel@gmail.com</id>
-      <name>Eduardo Moranchel</name>
-      <email>emoranchel@gmail.com</email>
-    </developer>
-    <developer>
-      <id>f.gonzalez.reynaga@gmail.com</id>
-      <name>Fernando Gonzalez</name>
-      <email>f.gonzalez.reynaga@gmail.com</email>
-    </developer>
-    <developer>
-      <id>felipe2610@gmail.com</id>
-      <name>Felipe Juarez</name>
-      <email>felipe2610@gmail.com</email>
-    </developer>
-    <developer>
-      <id>Aledis82@gmail.com</id>
-      <name>Dong Lee</name>
-      <email>Aledis82@gmail.com</email>
-    </developer>
-    <developer>
-      <id>webtallica@gmail.com</id>
-      <name>Julio Arroyo</name>
-      <email>webtallica@gmail.com</email>
-    </developer>
-    <developer>
-      <id>ismael.osornio@gmail.com</id>
-      <name>Ismael Osornio</name>
-      <email>ismael.osornio@gmail.com</email>
-    </developer>
-  </developers>
-  
+	<developers>
+		<developer>
+			<id>emoranchel@gmail.com</id>
+			<name>Eduardo Moranchel</name>
+			<email>emoranchel@gmail.com</email>
+		</developer>
+		<developer>
+			<id>f.gonzalez.reynaga@gmail.com</id>
+			<name>Fernando Gonzalez</name>
+			<email>f.gonzalez.reynaga@gmail.com</email>
+		</developer>
+		<developer>
+			<id>felipe2610@gmail.com</id>
+			<name>Felipe Juarez</name>
+			<email>felipe2610@gmail.com</email>
+		</developer>
+		<developer>
+			<id>Aledis82@gmail.com</id>
+			<name>Dong Lee</name>
+			<email>Aledis82@gmail.com</email>
+		</developer>
+		<developer>
+			<id>webtallica@gmail.com</id>
+			<name>Julio Arroyo</name>
+			<email>webtallica@gmail.com</email>
+		</developer>
+		<developer>
+			<id>ismael.osornio@gmail.com</id>
+			<name>Ismael Osornio</name>
+			<email>ismael.osornio@gmail.com</email>
+		</developer>
+	</developers>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.asmatron</groupId>
@@ -71,6 +71,7 @@
 	</dependencies>
 
 	<build>
+		<defaultGoal>package</defaultGoal>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -170,9 +171,9 @@
 		</plugins>
 	</reporting>
 
- <!--  AVOID RELEASE REPOSITORY/PLUGINREPOSITORY: -->
-  <repositories></repositories>
+	<!-- AVOID RELEASE REPOSITORY/PLUGINREPOSITORY: -->
+	<repositories></repositories>
 
-  <pluginRepositories></pluginRepositories>
-  
+	<pluginRepositories></pluginRepositories>
+
 </project>
