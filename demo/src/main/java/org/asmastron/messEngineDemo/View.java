@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import org.asmatron.messengine.ViewEngine;
-import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.ValueAction;
 import org.asmatron.messengine.annotations.EventMethod;
 
@@ -31,18 +30,17 @@ public class View extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String username = JOptionPane.showInputDialog("Give me a username");
 				ValueAction<String> actionArgument = new ValueAction<String>(username);
-				ActionId<ValueAction<String>> actionId = new ActionId<ValueAction<String>>("SEARCH_USER");
-				viewEngine.send(actionId, actionArgument);
+				viewEngine.send(Api.Actions.SEARCH_USER, actionArgument);
 			}
 		});
 	}
 
-	@EventMethod("USER_FOUND")
+	@EventMethod(Api.Events.USER_FOUND_ID)
 	public void userFound(String username) {
 		JOptionPane.showConfirmDialog(this, "User " + username + " found");
 	}
 
-	@EventMethod("USER_NOT_FOUND")
+	@EventMethod(Api.Events.USER_NOT_FOUND_ID)
 	public void userNotFound() {
 		JOptionPane.showConfirmDialog(this, "User not found. try again.");
 	}

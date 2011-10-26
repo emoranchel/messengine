@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import org.asmatron.messengine.annotations.MessageMethod;
 
 public class AnotherService {
-	@MessageMethod("REMOTE_CALL")
+	@MessageMethod(Api.Messages.REMOTE_CALL)
 	public void messageRemoteCall() {
 		// Dont do this please, its a demo so its ok, but all swing must be handled
 		// in swing.
