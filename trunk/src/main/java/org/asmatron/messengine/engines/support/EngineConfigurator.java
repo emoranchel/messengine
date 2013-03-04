@@ -9,6 +9,7 @@ public class EngineConfigurator {
 	private final ViewEngineConfigurator viewEngineConfigurator;
 	private final ControlEngineConfigurator controlEngineConfigurator;
 	private final MessagingConfigurator messagingConfigurator;
+	private final EngineListenerConfigurator engineListenerConfigurator;
 
 	public EngineConfigurator(Engine engine) {
 		this(engine, engine, engine);
@@ -18,6 +19,7 @@ public class EngineConfigurator {
 		this.viewEngineConfigurator = new ViewEngineConfigurator(viewEngine);
 		this.controlEngineConfigurator = new ControlEngineConfigurator(controlEngine);
 		this.messagingConfigurator = new MessagingConfigurator(messEngine);
+		this.engineListenerConfigurator = new EngineListenerConfigurator(controlEngine);
 	}
 
 	public void setup(Object... beans) {
@@ -36,12 +38,14 @@ public class EngineConfigurator {
 		viewEngineConfigurator.setupViewEngine(bean);
 		controlEngineConfigurator.setupControlEngine(bean);
 		messagingConfigurator.setupMessEngine(bean);
+		engineListenerConfigurator.setupListeners(bean);
 	}
 
 	public void reset(Object bean) {
 		viewEngineConfigurator.resetViewEngine(bean);
 		controlEngineConfigurator.resetControlEngine(bean);
 		messagingConfigurator.resetMessEngine(bean);
+		engineListenerConfigurator.resetListeners(bean);
 
 	}
 }

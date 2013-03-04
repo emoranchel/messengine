@@ -51,7 +51,11 @@ public class DefaultModelDelegate implements ModelDelegate {
 		if (type.isReadOnly() && model.get(type) != null) {
 			throw new IllegalStateException("Model already set, " + type + " should only be set once!");
 		}
-		model.put(type, value);
+		if(value==null){
+		  model.remove(type);
+		}else{
+      model.put(type, value);
+    }
 	}
 
 	@Override
