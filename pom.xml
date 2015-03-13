@@ -4,8 +4,8 @@
     <groupId>org.asmatron</groupId>
     <artifactId>messengine</artifactId>
     <packaging>jar</packaging>
-    <name>MessEngine</name>
-    <version>0.4.0-SNAPSHOT</version>
+    <name>MessEngine-0.4.0</name>
+    <version>0.4.0</version>
     <description>Simple Messaging engine for internal java communication</description>
     <url>http://code.google.com/p/messengine/</url>
 
@@ -23,11 +23,12 @@
         </license>
     </licenses>
 
-    <scm>
-        <connection>scm:svn:http://messengine.googlecode.com/svn/trunk</connection>
-        <developerConnection>scm:svn:https://messengine.googlecode.com/svn/trunk/</developerConnection>
-        <url>http://messengine.googlecode.com/svn/trunk</url>
-    </scm>
+  <scm>
+    <connection>scm:svn:http://messengine.googlecode.com/svn/tags/messengine-0.4.0</connection>
+    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/tags/messengine-0.4.0</developerConnection>
+    <url>http://messengine.googlecode.com/svn/tags/messengine-0.4.0</url>
+  </scm>
+
 
     <developers>
         <developer>
@@ -108,6 +109,7 @@
                     <downloadSources>true</downloadSources>
                 </configuration>
             </plugin>
+            
         </plugins>
     </build>
 
