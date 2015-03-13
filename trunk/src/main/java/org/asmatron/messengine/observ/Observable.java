@@ -2,44 +2,44 @@ package org.asmatron.messengine.observ;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Observable<T extends ObserveObject> implements ObserverCollection<T> {
-	private static final Log log = LogFactory.getLog(Observable.class);
 
-	List<Observer<T>> observers = new ArrayList<Observer<T>>();
+    private final static Logger log = Logger.getLogger(Observable.class.getName());
 
-	public boolean fire(T param) {
-		if (param == null) {
-			return true;
-		}
-		boolean ok = true;
-		List<Observer<T>> observers = new ArrayList<Observer<T>>(this.observers);
-		for (Observer<T> listener : observers) {
-			try {
-				listener.observe(param);
-			} catch (Exception e) {
-				ok = false;
-				log.error(e, e);
-			}
-		}
-		return ok;
-	}
+    List<Observer<T>> observers = new ArrayList<Observer<T>>();
 
-	public void add(Observer<T> l) {
-		if (l == null) {
-			throw new NullPointerException("Can't add a null listener.");
-		}
-		observers.add(l);
-	}
+    public boolean fire(T param) {
+        if (param == null) {
+            return true;
+        }
+        boolean ok = true;
+        List<Observer<T>> observers = new ArrayList<Observer<T>>(this.observers);
+        for (Observer<T> listener : observers) {
+            try {
+                listener.observe(param);
+            } catch (Exception e) {
+                ok = false;
+                log.log(Level.SEVERE, e.getMessage(), e);
+            }
+        }
+        return ok;
+    }
 
-	public void remove(Observer<T> listener) {
-		observers.remove(listener);
-	}
+    public void add(Observer<T> l) {
+        if (l == null) {
+            throw new NullPointerException("Can't add a null listener.");
+        }
+        observers.add(l);
+    }
 
-	public void clean() {
-		observers.clear();
-	}
+    public void remove(Observer<T> listener) {
+        observers.remove(listener);
+    }
+
+    public void clean() {
+        observers.clear();
+    }
 }

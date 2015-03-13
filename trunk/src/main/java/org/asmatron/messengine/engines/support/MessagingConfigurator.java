@@ -9,102 +9,116 @@ import org.asmatron.messengine.MessEngine;
 import org.asmatron.messengine.annotations.MessageMethod;
 import org.asmatron.messengine.annotations.MessageListenerClass;
 import org.asmatron.messengine.messaging.MessageListener;
-import org.springframework.core.annotation.AnnotationUtils;
 
 public class MessagingConfigurator {
-	private MessEngine messEngine;
 
-	public MessagingConfigurator() {
-	}
+    private MessEngine messEngine;
 
-	public MessagingConfigurator(MessEngine messEngine) {
-		setMessEngine(messEngine);
-	}
+    public MessagingConfigurator() {
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public int setupMessEngine(Object object) {
-		int count = 0;
-		MessageListenerClass selector = AnnotationUtils.findAnnotation(object.getClass(), MessageListenerClass.class);
-		if (selector != null && object instanceof MessageListener) {
-			MessageListener listener = (MessageListener) object;
-			messEngine.addMessageListener(selector.value(), listener);
-			count++;
-		}
-		List<Method> messageMethods = getMethods(object.getClass(), MessageMethod.class);
-		if (messageMethods.size() == 0) {
-			return count;
-		}
-		for (Method method : messageMethods) {
-			addMessageMethodHandler(object, method);
-		}
-		return messageMethods.size() + count;
-	}
+    public MessagingConfigurator(MessEngine messEngine) {
+        setMessEngine(messEngine);
+    }
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public int resetMessEngine(Object object) {
-		int count = 0;
-		MessageListenerClass selector = AnnotationUtils.findAnnotation(object.getClass(), MessageListenerClass.class);
-		if (selector != null && object instanceof MessageListener) {
-			MessageListener listener = (MessageListener) object;
-			messEngine.removeMessageListener(selector.value(), listener);
-			count++;
-		}
-		List<Method> messageMethods = getMethods(object.getClass(), MessageMethod.class);
-		if (messageMethods.size() == 0) {
-			return count;
-		}
-		for (Method method : messageMethods) {
-			removeMessageMethodHandler(object, method);
-		}
-		return messageMethods.size() + count;
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public int setupMessEngine(Object object) {
+        int count = 0;
+        MessageListenerClass selector = findAnnotation(object.getClass(), MessageListenerClass.class);
+        if (selector != null && object instanceof MessageListener) {
+            MessageListener listener = (MessageListener) object;
+            messEngine.addMessageListener(selector.value(), listener);
+            count++;
+        }
+        List<Method> messageMethods = getMethods(object.getClass(), MessageMethod.class);
+        if (messageMethods.size() == 0) {
+            return count;
+        }
+        for (Method method : messageMethods) {
+            addMessageMethodHandler(object, method);
+        }
+        return messageMethods.size() + count;
+    }
 
-	private void addMessageMethodHandler(Object object, Method method) {
-		checkMessEngine();
-		MessageMethod annotation = method.getAnnotation(MessageMethod.class);
-		MessageMethodListener listener = new MessageMethodListener(object, method);
-		String id = annotation.value();
-		messEngine.addMessageListener(id, listener);
-	}
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public int resetMessEngine(Object object) {
+        int count = 0;
+        MessageListenerClass selector = findAnnotation(object.getClass(), MessageListenerClass.class);
+        if (selector != null && object instanceof MessageListener) {
+            MessageListener listener = (MessageListener) object;
+            messEngine.removeMessageListener(selector.value(), listener);
+            count++;
+        }
+        List<Method> messageMethods = getMethods(object.getClass(), MessageMethod.class);
+        if (messageMethods.size() == 0) {
+            return count;
+        }
+        for (Method method : messageMethods) {
+            removeMessageMethodHandler(object, method);
+        }
+        return messageMethods.size() + count;
+    }
 
-	private void removeMessageMethodHandler(Object object, Method method) {
-		checkMessEngine();
-		MessageMethod annotation = method.getAnnotation(MessageMethod.class);
-		MessageMethodListener listener = new MessageMethodListener(object, method);
-		String id = annotation.value();
-		messEngine.removeMessageListener(id, listener);
-	}
+    private void addMessageMethodHandler(Object object, Method method) {
+        checkMessEngine();
+        MessageMethod annotation = method.getAnnotation(MessageMethod.class);
+        MessageMethodListener listener = new MessageMethodListener(object, method);
+        String id = annotation.value();
+        messEngine.addMessageListener(id, listener);
+    }
 
-	private void checkMessEngine() {
-		if (messEngine == null) {
-			throw new IllegalStateException("Autoconfigure failed no messEngine set.");
-		}
-	}
+    private void removeMessageMethodHandler(Object object, Method method) {
+        checkMessEngine();
+        MessageMethod annotation = method.getAnnotation(MessageMethod.class);
+        MessageMethodListener listener = new MessageMethodListener(object, method);
+        String id = annotation.value();
+        messEngine.removeMessageListener(id, listener);
+    }
 
-	private List<Method> getMethods(Class<?> objectClass, Class<? extends Annotation> annotationClass) {
-		List<Method> methods = new ArrayList<Method>();
-		getMethods(objectClass, annotationClass, methods);
-		return methods;
-	}
+    private void checkMessEngine() {
+        if (messEngine == null) {
+            throw new IllegalStateException("Autoconfigure failed no messEngine set.");
+        }
+    }
 
-	private void getMethods(Class<?> objectClass, Class<? extends Annotation> annotationClass, List<Method> methods) {
-		if (objectClass != null) {
-			Method[] declaredMethods = objectClass.getDeclaredMethods();
-			for (Method method : declaredMethods) {
-				if (method.isAnnotationPresent(annotationClass)) {
-					methods.add(method);
-				}
-			}
-			getMethods(objectClass.getSuperclass(), annotationClass, methods);
-		}
-	}
+    private List<Method> getMethods(Class<?> objectClass, Class<? extends Annotation> annotationClass) {
+        List<Method> methods = new ArrayList<Method>();
+        getMethods(objectClass, annotationClass, methods);
+        return methods;
+    }
 
-	public MessEngine getMessEngine() {
-		return messEngine;
-	}
+    private void getMethods(Class<?> objectClass, Class<? extends Annotation> annotationClass, List<Method> methods) {
+        if (objectClass != null) {
+            Method[] declaredMethods = objectClass.getDeclaredMethods();
+            for (Method method : declaredMethods) {
+                if (method.isAnnotationPresent(annotationClass)) {
+                    methods.add(method);
+                }
+            }
+            getMethods(objectClass.getSuperclass(), annotationClass, methods);
+        }
+    }
 
-	public void setMessEngine(MessEngine messEngine) {
-		this.messEngine = messEngine;
-	}
+    public MessEngine getMessEngine() {
+        return messEngine;
+    }
+
+    public void setMessEngine(MessEngine messEngine) {
+        this.messEngine = messEngine;
+    }
+
+    private <T extends Annotation> T findAnnotation(Class<?> clazz, Class<T> annotationType) {
+        T annotation = clazz.getAnnotation(annotationType);
+        if (annotation == null) {
+            for (Class<?> interfaze : clazz.getInterfaces()) {
+                annotation = findAnnotation(interfaze, annotationType);
+                if (annotation != null) {
+                    return annotation;
+                }
+                annotation = findAnnotation(clazz.getSuperclass(), annotationType);
+            }
+        }
+        return annotation;
+    }
 
 }
