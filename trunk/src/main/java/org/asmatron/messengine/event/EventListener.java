@@ -1,35 +1,43 @@
 package org.asmatron.messengine.event;
 
-public abstract class EventListener<T extends EventObject> implements Listener<T> {
+import org.asmatron.messengine.Handler;
 
-	private EventExecutionMode mode;
-	private boolean eager;
+public interface EventListener<T extends EventObject> {
 
-	public EventListener() {
-		this(EventExecutionMode.NORMAL, false);
-	}
+  void handleEvent(T eventArgs);
 
-	public EventListener(EventExecutionMode mode) {
-		this(mode, false);
-	}
+  default EventExecutionMode getMode() {
+    return EventExecutionMode.NORMAL;
+  }
 
-	public EventListener(boolean eager) {
-		this(EventExecutionMode.NORMAL, eager);
-	}
+  default boolean isEager() {
+    return false;
+  }
 
-	public EventListener(EventExecutionMode mode, boolean eager) {
-		this.mode = mode;
-		this.eager = eager;
-	}
+  static <T extends EventObject> EventListener<T> newEventListener(boolean eager, Handler<T> handler) {
+    return newEventListener(EventExecutionMode.NORMAL, eager, handler);
+  }
 
-	@Override
-	public EventExecutionMode getMode() {
-		return mode;
-	}
+  static <T extends EventObject> EventListener<T> newEventListener(EventExecutionMode mode, Handler<T> handler) {
+    return newEventListener(mode, false, handler);
+  }
 
-	@Override
-	public boolean isEager() {
-		return eager;
-	}
+  static <T extends EventObject> EventListener<T> newEventListener(EventExecutionMode mode, boolean eager, Handler<T> handler) {
+    return new EventListener<T>() {
+      @Override
+      public boolean isEager() {
+        return eager;
+      }
 
+      @Override
+      public EventExecutionMode getMode() {
+        return mode;
+      }
+
+      @Override
+      public void handleEvent(T eventArgs) {
+        handler.handle(eventArgs);
+      }
+    };
+  }
 }

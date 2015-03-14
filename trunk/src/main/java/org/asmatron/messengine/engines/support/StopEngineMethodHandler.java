@@ -6,7 +6,7 @@ import org.asmatron.messengine.EngineListener;
 import org.asmatron.messengine.util.MethodInvoker;
 
 public class StopEngineMethodHandler extends MethodInvoker implements
-    EngineListener {
+        EngineListener {
 
   public StopEngineMethodHandler(Object object, Method method) {
     super(object, method);

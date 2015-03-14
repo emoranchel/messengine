@@ -8,24 +8,25 @@ import org.asmatron.messengine.action.ResponseCallback;
 import org.asmatron.messengine.action.ValueAction;
 import org.asmatron.messengine.event.EventObject;
 import org.asmatron.messengine.event.EventId;
-import org.asmatron.messengine.event.Listener;
+import org.asmatron.messengine.event.EventListener;
 import org.asmatron.messengine.model.ModelId;
 
 public interface ViewEngine {
-	<T extends ActionObject> void send(ActionId<T> actionType, T parameter);
 
-	<T> void sendValueAction(ActionId<ValueAction<T>> action, T argument);
+  <T extends ActionObject> void send(ActionId<T> actionType, T parameter);
 
-	void send(ActionId<EmptyAction> action);
+  <T> void sendValueAction(ActionId<ValueAction<T>> action, T argument);
 
-	<V, T> void request(ActionId<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback);
+  void send(ActionId<EmptyAction> action);
 
-	<T> void request(ActionId<RequestAction<Void, T>> type, ResponseCallback<T> callback);
+  <V, T> void request(ActionId<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback);
 
-	<T> T get(ModelId<T> type);
+  <T> void request(ActionId<RequestAction<Void, T>> type, ResponseCallback<T> callback);
 
-	<T extends EventObject> void removeListener(EventId<T> currentviewchanged, Listener<T> listener);
+  <T> T get(ModelId<T> type);
 
-	<T extends EventObject> void addListener(EventId<T> currentviewchanged, Listener<T> listener);
+  <T extends EventObject> void removeListener(EventId<T> currentviewchanged, EventListener<T> listener);
+
+  <T extends EventObject> void addListener(EventId<T> currentviewchanged, EventListener<T> listener);
 
 }

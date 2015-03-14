@@ -3,32 +3,37 @@ package org.asmatron.messengine.observ;
 import java.awt.Component;
 
 public class NullObservable<T extends ObserveObject> extends Observable<T> {
-	private static final ObserverCollection<ObservValue<Component>> INSTANCE = new NullObservable<ObservValue<Component>>();
 
-	private NullObservable() {
-	}
+  private static final ObserverCollection<ObservValue<Component>> INSTANCE = new NullObservable<>();
 
-	public boolean fire(T param) {
-		return true;
-	}
+  private NullObservable() {
+  }
 
-	public void add(Observer<T> l) {
-	}
+  @Override
+  public boolean fire(T param) {
+    return true;
+  }
 
-	public void remove(Observer<T> listener) {
-	}
+  @Override
+  public void add(Observer<T> l) {
+  }
 
-	public void clean() {
-	}
+  @Override
+  public void remove(Observer<T> listener) {
+  }
 
-	@SuppressWarnings("unchecked")
-	public static <T extends ObserveObject> Observable<T> get() {
-		return (Observable<T>) INSTANCE;
-	}
+  @Override
+  public void clean() {
+  }
 
-	@SuppressWarnings("unchecked")
-	public static <T extends ObserveObject> ObserverCollection<T> getCollection() {
-		return (ObserverCollection<T>) INSTANCE;
-	}
+  @SuppressWarnings("unchecked")
+  public static <T extends ObserveObject> Observable<T> get() {
+    return (Observable<T>) INSTANCE;
+  }
+
+  @SuppressWarnings("unchecked")
+  public static <T extends ObserveObject> ObserverCollection<T> getCollection() {
+    return (ObserverCollection<T>) INSTANCE;
+  }
 
 }
