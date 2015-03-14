@@ -10,45 +10,46 @@ import org.asmatron.messengine.testing.support.TestMessagingDelegate;
 import org.asmatron.messengine.testing.support.TestModelDelegate;
 
 public class TestEngine extends DefaultEngine {
-	private ControlEngineConfigurator controlConfigurator;
-	private ViewEngineConfigurator viewConfigurator;
-	private MessagingConfigurator messagingConfigurator;
 
-	public void setup(Object object) {
-		getControlConfigurator().setupControlEngine(object);
-		getViewConfigurator().setupViewEngine(object);
-		getMessagingConfigurator().setupMessEngine(object);
-	}
+  private ControlEngineConfigurator controlConfigurator;
+  private ViewEngineConfigurator viewConfigurator;
+  private MessagingConfigurator messagingConfigurator;
 
-	public void reset(Object object) {
-		getViewConfigurator().resetViewEngine(object);
-		getControlConfigurator().resetControlEngine(object);
-		getMessagingConfigurator().resetMessEngine(object);
-	}
+  public void setup(Object object) {
+    getControlConfigurator().setupControlEngine(object);
+    getViewConfigurator().setupViewEngine(object);
+    getMessagingConfigurator().setupMessEngine(object);
+  }
 
-	private ControlEngineConfigurator getControlConfigurator() {
-		if (controlConfigurator == null) {
-			controlConfigurator = new ControlEngineConfigurator(this);
-		}
-		return controlConfigurator;
-	}
+  public void reset(Object object) {
+    getViewConfigurator().resetViewEngine(object);
+    getControlConfigurator().resetControlEngine(object);
+    getMessagingConfigurator().resetMessEngine(object);
+  }
 
-	private ViewEngineConfigurator getViewConfigurator() {
-		if (viewConfigurator == null) {
-			viewConfigurator = new ViewEngineConfigurator(this);
-		}
-		return viewConfigurator;
-	}
+  private ControlEngineConfigurator getControlConfigurator() {
+    if (controlConfigurator == null) {
+      controlConfigurator = new ControlEngineConfigurator(this);
+    }
+    return controlConfigurator;
+  }
 
-	public MessagingConfigurator getMessagingConfigurator() {
-		if (messagingConfigurator == null) {
-			messagingConfigurator = new MessagingConfigurator(this);
-		}
-		return messagingConfigurator;
-	}
+  private ViewEngineConfigurator getViewConfigurator() {
+    if (viewConfigurator == null) {
+      viewConfigurator = new ViewEngineConfigurator(this);
+    }
+    return viewConfigurator;
+  }
 
-	public TestEngine() {
-		super(new TestActionDelegate(), new TestEventDelegate(), new TestMessagingDelegate(), new TestModelDelegate());
-		start();
-	}
+  public MessagingConfigurator getMessagingConfigurator() {
+    if (messagingConfigurator == null) {
+      messagingConfigurator = new MessagingConfigurator(this);
+    }
+    return messagingConfigurator;
+  }
+
+  public TestEngine() {
+    super(new TestActionDelegate(), new TestEventDelegate(), new TestMessagingDelegate(), new TestModelDelegate());
+    start();
+  }
 }

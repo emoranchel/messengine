@@ -6,12 +6,13 @@ import org.asmatron.messengine.messaging.Message;
 import org.asmatron.messengine.messaging.MessageListener;
 
 public interface MessagingDelegate extends BaseDelegate {
-	void send(Message<?> message);
 
-	Future<Message<?>> request(Message<?> message, String responseType, long timeout);
+  void send(Message<?> message);
 
-	void addMessageListener(String type, MessageListener<? extends Message<?>> listener);
+  Future<Message<?>> request(Message<?> message, String responseType, long timeout);
 
-	void removeMessageListener(String type, MessageListener<? extends Message<?>> listener);
+  void addMessageListener(String type, MessageListener<?> listener);
+
+  void removeMessageListener(String type, MessageListener<?> listener);
 
 }

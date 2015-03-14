@@ -13,37 +13,37 @@ import org.asmatron.messengine.messaging.Message;
 
 public class ResponseManager {
 
-    private final static Logger log = Logger.getLogger(ResponseManager.class.getName());
-    private Map<String, ResponseLock> listeners;
-    private ExecutorService executor;
+  private final static Logger log = Logger.getLogger(ResponseManager.class.getName());
+  private Map<String, ResponseLock> listeners;
+  private ExecutorService executor;
 
-    public void initialize() {
-        listeners = Collections.synchronizedMap(new HashMap<String, ResponseLock>());
-        executor = Executors.newCachedThreadPool();
-    }
+  public void initialize() {
+    listeners = Collections.synchronizedMap(new HashMap<String, ResponseLock>());
+    executor = Executors.newCachedThreadPool();
+  }
 
-    public void shutdown() {
-        executor.shutdownNow();
-    }
+  public void shutdown() {
+    executor.shutdownNow();
+  }
 
-    public Future<Message<?>> addResponseListener(ResponseLock listener) {
-        if (listeners.containsKey(listener.getResponseType())) {
-            throw new IllegalStateException("There is already a response listener for this response type: "
-                    + listener.getResponseType());
-        }
-        listeners.put(listener.getResponseType(), listener);
-        return executor.submit(listener);
+  public Future<Message<?>> addResponseListener(ResponseLock listener) {
+    if (listeners.containsKey(listener.getResponseType())) {
+      throw new IllegalStateException("There is already a response listener for this response type: "
+              + listener.getResponseType());
     }
+    listeners.put(listener.getResponseType(), listener);
+    return executor.submit(listener);
+  }
 
-    public void notifyResponse(Message<?> response) {
-        ResponseLock listener = listeners.remove(response.getType());
-        if (listener != null) {
-            try {
-                listener.release(response);
-            } catch (Exception e) {
-                log.log(Level.SEVERE, "Unexpected exception executing response listener for type " + response.getType(), e);
-            }
-        }
+  public void notifyResponse(Message<?> response) {
+    ResponseLock listener = listeners.remove(response.getType());
+    if (listener != null) {
+      try {
+        listener.release(response);
+      } catch (Exception e) {
+        log.log(Level.SEVERE, "Unexpected exception executing response listener for type " + response.getType(), e);
+      }
     }
+  }
 
 }

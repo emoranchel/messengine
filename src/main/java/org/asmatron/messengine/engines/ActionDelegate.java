@@ -9,12 +9,12 @@ import org.asmatron.messengine.action.ResponseCallback;
 
 public interface ActionDelegate extends BaseDelegate {
 
-	void send(Action<?> command);
+  void send(Action<?> command);
 
-	<V, T> void request(ActionId<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback);
+  <V, T> void request(ActionId<RequestAction<V, T>> type, V requestParameter, ResponseCallback<T> callback);
 
-	<T extends ActionObject> void addActionHandler(ActionId<T> actionType, ActionHandler<T> actionHandler);
+  <T extends ActionObject> void addActionHandler(ActionId<T> actionType, ActionHandler<T> actionHandler);
 
-	<T extends ActionObject> void removeActionHandler(ActionId<T> action);
+  <T extends ActionObject> void removeActionHandler(ActionId<T> action);
 
 }

@@ -14,110 +14,111 @@ import org.asmatron.messengine.annotations.RequestMethod;
 import org.asmatron.messengine.util.AppAnnotationUtils;
 
 public class ControlEngineConfigurator {
-	private ControlEngine controlEngine;
 
-	public ControlEngineConfigurator() {
-	}
+  private ControlEngine controlEngine;
 
-	public ControlEngineConfigurator(ControlEngine controlEngine) {
-		setControlEngine(controlEngine);
-	}
+  public ControlEngineConfigurator() {
+  }
 
-	public int setupControlEngine(Object object) {
-		List<Field> requestFields = AppAnnotationUtils.getFields(object.getClass(), RequestField.class);
-		List<Method> requestMethods = AppAnnotationUtils.getMethods(object.getClass(), RequestMethod.class);
-		List<Method> actionMethods = AppAnnotationUtils.getMethods(object.getClass(), ActionMethod.class);
-		if ((requestFields.size() + requestMethods.size() + actionMethods.size()) == 0) {
-			return 0;
-		}
-		for (Method method : requestMethods) {
-			addRequestMethodHandler(object, method);
-		}
-		for (Method method : actionMethods) {
-			addActionMethodHandler(object, method);
-		}
-		for (Field field : requestFields) {
-			addRequestFieldHandler(object, field);
-		}
-		return requestFields.size() + requestMethods.size() + actionMethods.size();
-	}
+  public ControlEngineConfigurator(ControlEngine controlEngine) {
+    setControlEngine(controlEngine);
+  }
 
-	public int resetControlEngine(Object object) {
-		List<Field> requestFields = AppAnnotationUtils.getFields(object.getClass(), RequestField.class);
-		List<Method> requestMethods = AppAnnotationUtils.getMethods(object.getClass(), RequestMethod.class);
-		List<Method> actionMethods = AppAnnotationUtils.getMethods(object.getClass(), ActionMethod.class);
-		if ((requestFields.size() + requestMethods.size() + actionMethods.size()) == 0) {
-			return 0;
-		}
-		for (Method method : requestMethods) {
-			removeRequestMethodHandler(object, method);
-		}
-		for (Method method : actionMethods) {
-			removeActionMethodHandler(object, method);
-		}
-		for (Field field : requestFields) {
-			removeRequestFieldHandler(object, field);
-		}
-		return requestFields.size() + requestMethods.size() + actionMethods.size();
-	}
+  public int setupControlEngine(Object object) {
+    List<Field> requestFields = AppAnnotationUtils.getFields(object.getClass(), RequestField.class);
+    List<Method> requestMethods = AppAnnotationUtils.getMethods(object.getClass(), RequestMethod.class);
+    List<Method> actionMethods = AppAnnotationUtils.getMethods(object.getClass(), ActionMethod.class);
+    if ((requestFields.size() + requestMethods.size() + actionMethods.size()) == 0) {
+      return 0;
+    }
+    requestMethods.stream().forEach((method) -> {
+      addRequestMethodHandler(object, method);
+    });
+    actionMethods.stream().forEach((method) -> {
+      addActionMethodHandler(object, method);
+    });
+    requestFields.stream().forEach((field) -> {
+      addRequestFieldHandler(object, field);
+    });
+    return requestFields.size() + requestMethods.size() + actionMethods.size();
+  }
 
-	private void addRequestFieldHandler(Object object, Field field) {
-		checkControlEngine();
-		RequestField annotation = field.getAnnotation(RequestField.class);
-		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
-		RequestFieldHandler actionHandler = new RequestFieldHandler(object, field);
-		controlEngine.addActionHandler(actionType, actionHandler);
-	}
+  public int resetControlEngine(Object object) {
+    List<Field> requestFields = AppAnnotationUtils.getFields(object.getClass(), RequestField.class);
+    List<Method> requestMethods = AppAnnotationUtils.getMethods(object.getClass(), RequestMethod.class);
+    List<Method> actionMethods = AppAnnotationUtils.getMethods(object.getClass(), ActionMethod.class);
+    if ((requestFields.size() + requestMethods.size() + actionMethods.size()) == 0) {
+      return 0;
+    }
+    requestMethods.stream().forEach((method) -> {
+      removeRequestMethodHandler(object, method);
+    });
+    actionMethods.stream().forEach((method) -> {
+      removeActionMethodHandler(object, method);
+    });
+    requestFields.stream().forEach((field) -> {
+      removeRequestFieldHandler(object, field);
+    });
+    return requestFields.size() + requestMethods.size() + actionMethods.size();
+  }
 
-	private void addRequestMethodHandler(Object object, Method method) {
-		checkControlEngine();
-		RequestMethod annotation = method.getAnnotation(RequestMethod.class);
-		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
-		RequestMethodHandler actionHandler = new RequestMethodHandler(object, method);
-		controlEngine.addActionHandler(actionType, actionHandler);
-	}
+  private void addRequestFieldHandler(Object object, Field field) {
+    checkControlEngine();
+    RequestField annotation = field.getAnnotation(RequestField.class);
+    ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
+    RequestFieldHandler actionHandler = new RequestFieldHandler(object, field);
+    controlEngine.addActionHandler(actionType, actionHandler);
+  }
 
-	private void addActionMethodHandler(Object object, Method method) {
-		checkControlEngine();
-		ActionMethod annotation = method.getAnnotation(ActionMethod.class);
-		ActionId<ActionObject> actionType = ActionId.cm(annotation.value());
-		ActionMethodHandler actionHandler = new ActionMethodHandler(object, method);
-		controlEngine.addActionHandler(actionType, actionHandler);
-	}
+  private void addRequestMethodHandler(Object object, Method method) {
+    checkControlEngine();
+    RequestMethod annotation = method.getAnnotation(RequestMethod.class);
+    ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
+    RequestMethodHandler actionHandler = new RequestMethodHandler(object, method);
+    controlEngine.addActionHandler(actionType, actionHandler);
+  }
 
-	private void removeRequestFieldHandler(Object object, Field field) {
-		checkControlEngine();
-		RequestField annotation = field.getAnnotation(RequestField.class);
-		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
-		controlEngine.removeActionHandler(actionType);
-	}
+  private void addActionMethodHandler(Object object, Method method) {
+    checkControlEngine();
+    ActionMethod annotation = method.getAnnotation(ActionMethod.class);
+    ActionId<ActionObject> actionType = ActionId.cm(annotation.value());
+    ActionMethodHandler actionHandler = new ActionMethodHandler(object, method);
+    controlEngine.addActionHandler(actionType, actionHandler);
+  }
 
-	private void removeActionMethodHandler(Object object, Method method) {
-		checkControlEngine();
-		ActionMethod annotation = method.getAnnotation(ActionMethod.class);
-		ActionId<ActionObject> actionType = ActionId.cm(annotation.value());
-		controlEngine.removeActionHandler(actionType);
-	}
+  private void removeRequestFieldHandler(Object object, Field field) {
+    checkControlEngine();
+    RequestField annotation = field.getAnnotation(RequestField.class);
+    ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
+    controlEngine.removeActionHandler(actionType);
+  }
 
-	private void removeRequestMethodHandler(Object object, Method method) {
-		checkControlEngine();
-		RequestMethod annotation = method.getAnnotation(RequestMethod.class);
-		ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
-		controlEngine.removeActionHandler(actionType);
-	}
+  private void removeActionMethodHandler(Object object, Method method) {
+    checkControlEngine();
+    ActionMethod annotation = method.getAnnotation(ActionMethod.class);
+    ActionId<ActionObject> actionType = ActionId.cm(annotation.value());
+    controlEngine.removeActionHandler(actionType);
+  }
 
-	private void checkControlEngine() {
-		if (controlEngine == null) {
-			throw new IllegalStateException("Autoconfigure failed no ControlEngine set.");
-		}
-	}
+  private void removeRequestMethodHandler(Object object, Method method) {
+    checkControlEngine();
+    RequestMethod annotation = method.getAnnotation(RequestMethod.class);
+    ActionId<RequestAction<Object, Object>> actionType = ActionId.cm(annotation.value());
+    controlEngine.removeActionHandler(actionType);
+  }
 
-	public ControlEngine getControlEngine() {
-		return controlEngine;
-	}
+  private void checkControlEngine() {
+    if (controlEngine == null) {
+      throw new IllegalStateException("Autoconfigure failed no ControlEngine set.");
+    }
+  }
 
-	public void setControlEngine(ControlEngine controlEngine) {
-		this.controlEngine = controlEngine;
-	}
+  public ControlEngine getControlEngine() {
+    return controlEngine;
+  }
+
+  public final void setControlEngine(ControlEngine controlEngine) {
+    this.controlEngine = controlEngine;
+  }
 
 }

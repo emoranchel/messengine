@@ -1,44 +1,48 @@
 package org.asmatron.messengine.model;
 
 public class ModelId<T> {
-	private final String id;
-	private final boolean readOnly;
 
-	public ModelId(String id, boolean readOnly) {
-		this.id = id;
-		this.readOnly = readOnly;
-	}
+  private final String id;
+  private final boolean readOnly;
 
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
+  public ModelId(String id, boolean readOnly) {
+    this.id = id;
+    this.readOnly = readOnly;
+  }
 
-	public String getId() {
-		return id;
-	}
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
 
-	public boolean isReadOnly() {
-		return readOnly;
-	}
+  public String getId() {
+    return id;
+  }
 
-	@Override
-	public boolean equals(Object obj) {
-		ModelId<?> other = (ModelId<?>) obj;
-		return this.id.equals(other.id);
-	}
+  public boolean isReadOnly() {
+    return readOnly;
+  }
 
-	@Override
-	public String toString() {
-		return "MODEL:" + id;
-	}
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof ModelId) {
+      ModelId<?> other = (ModelId<?>) obj;
+      return this.id.equals(other.id);
+    }
+    return false;
+  }
 
-	public static final <T> ModelId<T> readOnly(String id) {
-		return new ModelId<T>(id, true);
-	}
+  @Override
+  public String toString() {
+    return "MODEL:" + id;
+  }
 
-	public static final <T> ModelId<T> model(String id) {
-		return new ModelId<T>(id, false);
-	}
+  public static final <T> ModelId<T> readOnly(String id) {
+    return new ModelId<>(id, true);
+  }
+
+  public static final <T> ModelId<T> model(String id) {
+    return new ModelId<>(id, false);
+  }
 
 }

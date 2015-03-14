@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 public @interface MessageListenerClass {
 
-    String value();
+  String value();
 }
