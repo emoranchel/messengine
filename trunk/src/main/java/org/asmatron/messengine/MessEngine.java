@@ -11,7 +11,7 @@ public interface MessEngine {
 
   Future<Message<?>> request(Message<?> message, String responseType, long timeout);
 
-  void addMessageListener(String type, MessageListener<Message<?>> listener);
+  <T> MessageListener<Message<T>> addMessageListener(String type, MessageListener<Message<T>> listener);
 
   void removeMessageListener(String type, MessageListener<Message<?>> listener);
 }

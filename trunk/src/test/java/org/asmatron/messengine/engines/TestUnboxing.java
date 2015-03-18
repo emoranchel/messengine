@@ -15,9 +15,9 @@ import org.junit.Test;
 
 
 public class TestUnboxing {
-	private TestEngine engine = new TestEngine();
-	private EventListener ev = new EventListener();
-	private ActionListener ac = new ActionListener();
+	private final TestEngine engine = new TestEngine();
+	private final EventListener ev = new EventListener();
+	private final ActionListener ac = new ActionListener();
 
 	@Before
 	public void setup() {

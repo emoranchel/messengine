@@ -56,7 +56,7 @@ public interface ControlEngine extends EngineController {
 
   <T> void set(ModelId<T> modelId, T value, EventId<ValueEvent<T>> event);
 
-  <T extends ActionObject> void addActionHandler(ActionId<T> actionId, ActionHandler<T> actionHandler);
+  <T extends ActionObject> ActionHandler<T> addActionHandler(ActionId<T> actionId, ActionHandler<T> actionHandler);
 
   <T extends ActionObject> void removeActionHandler(ActionId<T> actionId);
 

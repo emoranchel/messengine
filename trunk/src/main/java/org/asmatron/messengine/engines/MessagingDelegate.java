@@ -11,7 +11,7 @@ public interface MessagingDelegate extends BaseDelegate {
 
   Future<Message<?>> request(Message<?> message, String responseType, long timeout);
 
-  void addMessageListener(String type, MessageListener<?> listener);
+  <T> MessageListener<T> addMessageListener(String type, MessageListener<T> listener);
 
   void removeMessageListener(String type, MessageListener<?> listener);
 

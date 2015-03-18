@@ -35,7 +35,7 @@ public interface AnnotationTestingClasses {
 	class RequestFieldTester {
 		@SuppressWarnings("unused")
 		@RequestField(TestTypes.requestFieldId)
-		private String value = "abc";
+		private final String value = "abc";
 	}
 
 	class ActionMethodTester {

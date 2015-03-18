@@ -14,5 +14,4 @@ public class EmptyCallback<T> implements ResponseCallback<T> {
 	public static <T> ResponseCallback<T> get(Class<T> t) {
 		return (ResponseCallback<T>) INSTANCE;
 	}
-
 }

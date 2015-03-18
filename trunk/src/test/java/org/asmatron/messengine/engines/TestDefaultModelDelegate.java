@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,60 +20,60 @@ import org.mockito.Spy;
 
 public class TestDefaultModelDelegate {
 
-	@InjectMocks
-	private DefaultModelDelegate modelDelegate = new DefaultModelDelegate();
-	@Spy
-	private Map model = new HashMap();
-	@Mock
-	private ModelId<String> modelId;
-	@Mock
-	private ModelId<List<String>> listModelId;
-	@Spy
-	private List<String> returnCollectionValue = new ArrayList<String>();
+  @InjectMocks
+  private final DefaultModelDelegate modelDelegate = new DefaultModelDelegate();
+  @Spy
+  private final Map model = new HashMap();
+  @Mock
+  private ModelId<String> modelId;
+  @Mock
+  private ModelId<List<String>> listModelId;
+  @Spy
+  private final List<String> returnCollectionValue = new ArrayList<String>();
 
-	private String returnValue = "value";
+  private final String returnValue = "value";
 
-	@Before
-	public void setup() {
-		MockitoAnnotations.initMocks(this);
-	}
+  @Before
+  public void setup() {
+    MockitoAnnotations.initMocks(this);
+  }
 
-	@Test
-	public void shouldAssignValuesAndTypes() throws Exception {
-		modelDelegate.start();
+  @Test
+  public void shouldAssignValuesAndTypes() throws Exception {
+    modelDelegate.start();
 
-		modelDelegate.set(modelId, returnValue);
+    modelDelegate.set(modelId, returnValue);
 
-		verify(model).put(modelId, returnValue);
-		assertTrue(modelDelegate.get(modelId) instanceof String);
-		assertEquals(modelDelegate.get(modelId), returnValue);
-	}
+    verify(model).put(modelId, returnValue);
+    assertTrue(modelDelegate.get(modelId) instanceof String);
+    assertEquals(modelDelegate.get(modelId), returnValue);
+  }
 
-	@Test
-	public void shouldAssignCollectionValueAndType() throws Exception {
-		modelDelegate.start();
-		
-		modelDelegate.set(listModelId, returnCollectionValue);
+  @Test
+  public void shouldAssignCollectionValueAndType() throws Exception {
+    modelDelegate.start();
 
-		verify(model).put(listModelId, returnCollectionValue);
-		assertTrue(modelDelegate.get(listModelId) instanceof List);
-		assertEquals(modelDelegate.get(listModelId), returnCollectionValue);
-	}
+    modelDelegate.set(listModelId, returnCollectionValue);
 
-	@Test(expected = IllegalStateException.class)
-	public void shouldThrowIlegalStateExceptionInSetter() throws Exception {
-		modelDelegate.stop();
+    verify(model).put(listModelId, returnCollectionValue);
+    assertTrue(modelDelegate.get(listModelId) instanceof List);
+    assertEquals(modelDelegate.get(listModelId), returnCollectionValue);
+  }
 
-		modelDelegate.set(listModelId, returnCollectionValue);
-		verify(model, never()).put(listModelId, returnCollectionValue);
-	}
+  @Test(expected = IllegalStateException.class)
+  public void shouldThrowIlegalStateExceptionInSetter() throws Exception {
+    modelDelegate.stop();
 
-	@Test(expected = IllegalStateException.class)
-	public void shouldThrowIlegalStateExceptionInGetter() throws Exception {
-		modelDelegate.stop();
+    modelDelegate.set(listModelId, returnCollectionValue);
+    verify(model, never()).put(listModelId, returnCollectionValue);
+  }
 
-		modelDelegate.get(listModelId);
-		verify(model, never()).get(listModelId);
-	}
+  @Test(expected = IllegalStateException.class)
+  public void shouldThrowIlegalStateExceptionInGetter() throws Exception {
+    modelDelegate.stop();
+
+    modelDelegate.get(listModelId);
+    verify(model, never()).get(listModelId);
+  }
 
 }

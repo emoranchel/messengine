@@ -42,7 +42,7 @@ public class TestMessageConsumer {
     MessageListener<String> listener = mock(MessageListener.class);
     listeners.add(listener);
     TestMessage<String> message = new TestMessage<>("type", "body");
-    MessageConsumer<String> consumer = new MessageConsumer<String>(message, listeners);
+    MessageConsumer<String> consumer = new MessageConsumer<>(message, listeners);
 
     assertNotNull(consumer);
     assertTrue(consumer instanceof Runnable);
