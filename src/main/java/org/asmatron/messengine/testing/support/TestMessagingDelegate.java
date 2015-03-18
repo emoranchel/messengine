@@ -36,13 +36,14 @@ public class TestMessagingDelegate implements MessagingDelegate {
 
   @SuppressWarnings("unchecked")
   @Override
-  public void addMessageListener(String type, MessageListener<?> listener) {
+  public <T> MessageListener<T> addMessageListener(String type, MessageListener<T> listener) {
     List<MessageListener<?>> list = listeners.get(type);
     if (list == null) {
       list = new CopyOnWriteArrayList<>();
       listeners.put(type, list);
     }
     list.add((MessageListener<Message<?>>) listener);
+    return listener;
   }
 
   @Override

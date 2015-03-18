@@ -118,12 +118,12 @@ public class DefaultEngine implements Engine {
   }
 
   @Override
-  public <T extends ActionObject> void addActionHandler(ActionId<T> actionType,
-          ActionHandler<T> actionHandler) {
+  public <T extends ActionObject> ActionHandler<T> addActionHandler(ActionId<T> actionType, ActionHandler<T> actionHandler) {
     if (status == EngineStatus.STOPED) {
       throw new IllegalStateException();
     }
     actionDelegate.addActionHandler(actionType, actionHandler);
+    return actionHandler;
   }
 
   @Override
@@ -138,12 +138,12 @@ public class DefaultEngine implements Engine {
   }
 
   @Override
-  public <T extends EventObject> void addListener(EventId<T> type,
-          EventListener<T> listener) {
+  public <T extends EventObject> EventListener<T> addListener(EventId<T> type, EventListener<T> listener) {
     if (status == EngineStatus.STOPED) {
       throw new IllegalStateException();
     }
     eventDelegate.addListener(type, listener);
+    return listener;
   }
 
   @Override
@@ -210,11 +210,12 @@ public class DefaultEngine implements Engine {
   }
 
   @Override
-  public void addMessageListener(String type, MessageListener<Message<?>> listener) {
+  public <T> MessageListener<Message<T>> addMessageListener(String type, MessageListener<Message<T>> listener) {
     if (status == EngineStatus.STOPED) {
       throw new IllegalStateException();
     }
     messagingDelegate.addMessageListener(type, listener);
+    return listener;
   }
 
   @Override

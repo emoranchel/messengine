@@ -27,6 +27,6 @@ public interface ViewEngine {
 
   <T extends EventObject> void removeListener(EventId<T> currentviewchanged, EventListener<T> listener);
 
-  <T extends EventObject> void addListener(EventId<T> currentviewchanged, EventListener<T> listener);
+  <T extends EventObject> EventListener<T> addListener(EventId<T> currentviewchanged, EventListener<T> listener);
 
 }

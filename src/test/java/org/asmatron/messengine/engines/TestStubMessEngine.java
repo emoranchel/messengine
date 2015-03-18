@@ -20,14 +20,19 @@ import org.mockito.MockitoAnnotations;
 public class TestStubMessEngine {
 
   @InjectMocks
-  private TestMessagingDelegate messEngine = new TestMessagingDelegate();
+  private final TestMessagingDelegate messEngine = new TestMessagingDelegate();
   private final String textType = "text";
   private final String body = "body";
   private final String objectType = "object";
-
+  private final TestMessage<Serializable> objectMessage = new TestMessage<>(objectType, body);
   private final Message<String> textMessage = new TestMessage<>(textType, body);
   private boolean listenerExecuted = false;
+
   private final MessageListener<String> textListener = (Message<String> message) -> {
+    listenerExecuted = true;
+  };
+
+  private final MessageListener<Serializable> objectListener = (Message<Serializable> message) -> {
     listenerExecuted = true;
   };
 
@@ -35,12 +40,6 @@ public class TestStubMessEngine {
   public void setup() {
     MockitoAnnotations.initMocks(this);
   }
-
-  TestMessage<Serializable> objectMessage = new TestMessage<>(objectType, body);
-
-  private final MessageListener<Serializable> objectListener = (Message<Serializable> message) -> {
-    listenerExecuted = true;
-  };
 
   @Test
   public void shouldRecordMessages() throws Exception {
@@ -99,11 +98,8 @@ public class TestStubMessEngine {
   @Test
   public void shouldReactToAMessage() throws Exception {
     final AtomicBoolean reactionExecuted = new AtomicBoolean(false);
-    messEngine.addMessageReaction(textMessage, new Runnable() {
-      @Override
-      public void run() {
-        reactionExecuted.set(true);
-      }
+    messEngine.addMessageReaction(textMessage, () -> {
+      reactionExecuted.set(true);
     });
 
     messEngine.send(textMessage);
@@ -114,11 +110,8 @@ public class TestStubMessEngine {
   @Test
   public void shouldReactToAMessageType() throws Exception {
     final AtomicBoolean reactionExecuted = new AtomicBoolean(false);
-    messEngine.addTypeReaction(textType, new Runnable() {
-      @Override
-      public void run() {
-        reactionExecuted.set(true);
-      }
+    messEngine.addTypeReaction(textType, () -> {
+      reactionExecuted.set(true);
     });
 
     messEngine.send(textMessage);

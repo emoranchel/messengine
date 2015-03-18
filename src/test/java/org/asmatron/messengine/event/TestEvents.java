@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class TestEvents {
 
-  public static final EventId<CustomEvent> aType = new EventId<>("a");
+  private static final EventId<CustomEvent> aType = new EventId<>("a");
 
   @Test
   public void shouldTestEventEngine() throws Exception {
