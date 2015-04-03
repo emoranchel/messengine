@@ -5,7 +5,7 @@
   <artifactId>messengine</artifactId>
   <packaging>jar</packaging>
   <name>MessEngine-trunk</name>
-  <version>0.8.8-SNAPSHOT</version>
+  <version>0.9.0-SNAPSHOT</version>
   <description>Simple Messaging engine for internal java communication</description>
   <url>http://code.google.com/p/messengine/</url>
 
@@ -17,10 +17,15 @@
     </license>
   </licenses>
 
+  <issueManagement>
+		<url>https://github.com/emoranchel/messengine/issues</url>
+		<system>GitHub Issues</system>
+	</issueManagement>
+  
   <scm>
-    <connection>scm:svn:http://messengine.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/trunk/</developerConnection>
-    <url>http://messengine.googlecode.com/svn/trunk</url>
+    <url>https://github.com/emoranchel/messengine</url>
+    <connection>scm:git:git://github.com/emoranchel/messengine.git</connection>
+    <developerConnection>scm:git:git@github.com:emoranchel/messengine.git</developerConnection>
   </scm>
 
   <developers>
