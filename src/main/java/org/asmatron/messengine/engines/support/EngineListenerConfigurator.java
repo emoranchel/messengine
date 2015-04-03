@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.asmatron.messengine.EngineController;
 import org.asmatron.messengine.EngineListener;
-import org.asmatron.messengine.annotations.EngineStart;
-import org.asmatron.messengine.annotations.EngineStop;
+import org.asmatron.messengine.annotations.EngineStarted;
+import org.asmatron.messengine.annotations.EngineStarting;
+import org.asmatron.messengine.annotations.EngineStoped;
+import org.asmatron.messengine.annotations.EngineStoping;
 
 public class EngineListenerConfigurator {
 
@@ -25,11 +27,17 @@ public class EngineListenerConfigurator {
     if (object instanceof EngineListener) {
       engineController.addEngineListener((EngineListener) object);
     }
-    getMethods(object.getClass(), EngineStart.class).stream().forEach((method) -> {
-      engineController.addEngineListener(new StartEngineMethodHandler(object, method));
+    getMethods(object.getClass(), EngineStarting.class).stream().forEach((method) -> {
+      engineController.addEngineListener(new EngineListenerMethodHandler(object, method, EngineListenerMethodHandler.Mode.STARTING));
     });
-    getMethods(object.getClass(), EngineStop.class).stream().forEach((method) -> {
-      engineController.addEngineListener(new StopEngineMethodHandler(object, method));
+    getMethods(object.getClass(), EngineStoping.class).stream().forEach((method) -> {
+      engineController.addEngineListener(new EngineListenerMethodHandler(object, method, EngineListenerMethodHandler.Mode.STOPING));
+    });
+    getMethods(object.getClass(), EngineStarted.class).stream().forEach((method) -> {
+      engineController.addEngineListener(new EngineListenerMethodHandler(object, method, EngineListenerMethodHandler.Mode.STARTED));
+    });
+    getMethods(object.getClass(), EngineStoped.class).stream().forEach((method) -> {
+      engineController.addEngineListener(new EngineListenerMethodHandler(object, method, EngineListenerMethodHandler.Mode.STOPED));
     });
   }
 

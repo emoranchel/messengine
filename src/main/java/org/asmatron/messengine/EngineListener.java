@@ -2,7 +2,11 @@ package org.asmatron.messengine;
 
 public interface EngineListener {
 
-  void onEngineStart();
+  void onEngineStarting();
 
-  void onEngineStop();
+  void onEngineStarted();
+
+  void onEngineStoping();
+
+  void onEngineStoped();
 }
