@@ -1,0 +1,94 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.asmatron</groupId>
+  <artifactId>messengine</artifactId>
+  <packaging>jar</packaging>
+  <name>MessEngine-0.8.8</name>
+  <version>0.8.8</version>
+  <description>Simple Messaging engine for internal java communication</description>
+  <url>http://code.google.com/p/messengine/</url>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:svn:http://messengine.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://messengine.googlecode.com/svn/trunk/</developerConnection>
+    <url>http://messengine.googlecode.com/svn/trunk</url>
+  </scm>
+
+  <developers>
+    <developer>
+      <id>emoranchel@gmail.com</id>
+      <name>Eduardo Moranchel</name>
+      <email>emoranchel@gmail.com</email>
+    </developer>
+    <developer>
+      <id>f.gonzalez.reynaga@gmail.com</id>
+      <name>Fernando Gonzalez</name>
+      <email>f.gonzalez.reynaga@gmail.com</email>
+    </developer>
+    <developer>
+      <id>felipe2610@gmail.com</id>
+      <name>Felipe Juarez</name>
+      <email>felipe2610@gmail.com</email>
+    </developer>
+    <developer>
+      <id>Aledis82@gmail.com</id>
+      <name>Dong Lee</name>
+      <email>Aledis82@gmail.com</email>
+    </developer>
+    <developer>
+      <id>webtallica@gmail.com</id>
+      <name>Julio Arroyo</name>
+      <email>webtallica@gmail.com</email>
+    </developer>
+    <developer>
+      <id>ismael.osornio@gmail.com</id>
+      <name>Ismael Osornio</name>
+      <email>ismael.osornio@gmail.com</email>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.6</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.8.5</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <defaultGoal>package</defaultGoal>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <!-- AVOID RELEASE REPOSITORY/PLUGINREPOSITORY: -->
+  <repositories></repositories>
+
+  <pluginRepositories></pluginRepositories>
+
+</project>
