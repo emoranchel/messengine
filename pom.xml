@@ -4,8 +4,8 @@
   <groupId>org.asmatron</groupId>
   <artifactId>messengine</artifactId>
   <packaging>jar</packaging>
-  <name>MessEngine-trunk</name>
-  <version>0.8.8-SNAPSHOT</version>
+  <name>MessEngine-0.8.8</name>
+  <version>0.8.8</version>
   <description>Simple Messaging engine for internal java communication</description>
   <url>http://code.google.com/p/messengine/</url>
 
