@@ -154,7 +154,7 @@ public class DefaultEngine implements Engine {
   @Override
   public void start(Callback callback) {
     listeners.stream().forEach((listener) -> {
-      listener.onEngineStart();
+      listener.onEngineStarting();
     });
     status = EngineStatus.STARTED;
     actionDelegate.start();
@@ -162,6 +162,9 @@ public class DefaultEngine implements Engine {
     messagingDelegate.start();
     modelDelegate.start();
     call(callback);
+    listeners.stream().forEach((listener) -> {
+      listener.onEngineStarted();
+    });
   }
 
   @Override
@@ -171,13 +174,16 @@ public class DefaultEngine implements Engine {
 
   @Override
   public void stop(Callback callback) {
+    listeners.stream().forEach((listener) -> {
+      listener.onEngineStoping();
+    });
     status = EngineStatus.STOPED;
     actionDelegate.stop();
     eventDelegate.stop();
     messagingDelegate.stop();
     modelDelegate.stop();
     listeners.stream().forEach((listener) -> {
-      listener.onEngineStop();
+      listener.onEngineStoped();
     });
     call(callback);
   }
